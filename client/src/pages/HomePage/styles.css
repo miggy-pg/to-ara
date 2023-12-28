@@ -1,0 +1,10 @@
+.banner {
+  /* The image used */
+  background-image: url(../../assets/images/tinago-falls-in-iligan.jpg);
+  background-repeat: no-repeat;
+  height: 20rem;
+  width: 100%;
+  border-radius: 1rem;
+  margin: 0 !important;
+  padding: 0 !important;
+}
