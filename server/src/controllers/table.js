@@ -68,7 +68,7 @@ const accomodationTbleQuery = {
     status VARCHAR(50),
     description TEXT,
     direction TEXT,
-    amenities JSON 
+    amenities TEXT ARRAY 
 );`,
   response: "Festival table created successfully!",
 };
