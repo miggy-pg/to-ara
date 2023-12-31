@@ -25,7 +25,7 @@ export default function FavoritesTableRow({ props, routePath }) {
       <TableRow>
         <TableCell>
           <Typography color="textSecondary" variant="h6">
-            <img src={image} width="100px" height="100px" />
+            <img src={`http://localhost:4000/images/${routePath.toLowerCase()}/${ image ? image : "image-placeholder.jpg"}`} width="100px" height="100px" />
           </Typography>
         </TableCell>
         <TableCell>

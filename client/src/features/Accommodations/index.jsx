@@ -143,6 +143,7 @@ export default function Accommodations() {
     async function fetchData() {
       try {
         const { data: accommodations } = await getAccommodations();
+        console.log("accommodations", accommodations);
         dispatch(setAccommodations(accommodations));
         setIsLoading(false);
       } catch (error) {
@@ -154,6 +155,8 @@ export default function Accommodations() {
 
   const currPageItems =
     !isLoading && accommodations.slice(indexOfFirstItem, indexOfLastItem);
+
+  console.log("currPageItems", currPageItems);
 
   return (
     <>

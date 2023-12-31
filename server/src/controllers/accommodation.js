@@ -53,7 +53,6 @@ exports.createAccommodation = async (req, res) => {
     amenities,
   } = req.body;
 
-  console.log("amenities: ", [amenities]);
 
   try {
     const { rows } = await db.query(

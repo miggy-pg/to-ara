@@ -18,7 +18,7 @@ export default function FavoritesTable({ header, favorites }) {
   const [indexOfLastItem, setIndexOfLastItem] = useState(null);
   const [indexOfFirstItem, setIndexOfFirstItem] = useState(null);
   const currPageItems = favorites.slice(indexOfFirstItem, indexOfLastItem);
-
+  
   return (
     <Card>
       <Box

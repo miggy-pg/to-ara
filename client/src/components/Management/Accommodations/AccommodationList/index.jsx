@@ -43,7 +43,7 @@ const style = {
   p: 4,
 };
 
-export default function AccomodationList({ props }) {
+export default function AccommodationList({ props }) {
   const {
     id,
     image,
@@ -58,10 +58,6 @@ export default function AccomodationList({ props }) {
     description,
     amenities,
   } = props;
-
-  // Object.keys(amenities).forEach(
-  //   (key) => !listAmenities.includes(String(key)) && listAmenities.push(key)
-  // );
 
   const dispatch = useDispatch();
 
@@ -168,7 +164,7 @@ export default function AccomodationList({ props }) {
       console.log(error);
     }
   };
-
+  console.log("image: ", image);
   return (
     <>
       <TableRow>
