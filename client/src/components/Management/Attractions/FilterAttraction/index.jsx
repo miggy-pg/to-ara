@@ -39,8 +39,8 @@ export default function FilterAttraction({
         InputProps={{
           endAdornment: (
             <InputAdornment>
-              <IconButton>
-                <SearchIcon onClick={handleOnClickSearch} />
+              <IconButton onClick={handleOnClickSearch} >
+                <SearchIcon/>
               </IconButton>
             </InputAdornment>
           ),

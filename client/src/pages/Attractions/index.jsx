@@ -27,7 +27,7 @@ export default function Attractions() {
   const [queryAttractions, setQueryAttractions] = useState("");
 
   // useState for filter attractions
-  const [filterLocation, setFilterLocation] = useState();
+  const [filterLocation, setFilterLocation] = useState("");
 
   // We are using custom pagination hook
   const [indexOfLastItem, setIndexOfLastItem] = useState(null);
@@ -80,16 +80,18 @@ export default function Attractions() {
       maxFee.length > 0 &&
       setItems(
         searchResults
-          .filter((attraction) =>
-            attraction.address
-              ?.toLowerCase()
-              .includes(filterLocation.toLowerCase())
-          )
           .filter(
-            (attr) => attr.entrance_fee >= minFee && attr.entrance_fee <= maxFee
-          )
-      );
-
+            (attr) => 
+            Number(attr.entrance_fee) >= Number(minFee) && Number(attr.entrance_fee) <= Number(maxFee)
+            )
+          // .filter((attraction) =>
+          //   attraction.address
+          //     ?.toLowerCase()
+          //     .includes(filterLocation.toLowerCase())
+          // )
+          
+            );
+            
     minFee.length > 0 &&
       maxFee.length > 0 &&
       setItems(
@@ -108,21 +110,12 @@ export default function Attractions() {
             .includes(filterLocation.toLowerCase())
         )
       );
-
-    setFilterLocation("");
-    setMaxFee("");
-    setMinFee("");
   };
-  console.log("items: ", items);
+
   useEffect(() => {
     setItems(attractions);
   }, [attractions]);
 
-  // !isLoading && !queryAttractions.length
-  //   ? items?.length < attractions?.length
-  //     ? attractions?.length
-  //     : items?.length
-  //   : items?.length;
 
   return (
     <Box
@@ -141,8 +134,6 @@ export default function Attractions() {
             backgroundColor: "#ffffff",
             boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.1)",
           }}
-          attractions={attractions}
-          toggleSidebar={() => setSidebarOpen(!isSidebarOpen)}
         />
 
         <Grid container>

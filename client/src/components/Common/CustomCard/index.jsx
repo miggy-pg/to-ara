@@ -11,6 +11,8 @@ import {
 } from "@mui/material";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
+import { trimSentence } from "../../../utils/trimSentence";
+
 
 export default function CustomCard({ props, favorite, isType, onAddFavorite }) {
   const { id: selectedId, image, name, description } = props;
@@ -89,7 +91,7 @@ export default function CustomCard({ props, favorite, isType, onAddFavorite }) {
               minHeight: "9rem",
             }}
           >
-            {description || "No description available for this record."}
+            {trimSentence(description, 125) || "No description available for this record."}
           </Typography>
           {isType === "accommodations" && (
             <Typography

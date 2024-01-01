@@ -11,9 +11,9 @@ export default function MapLocator({ latitude, longitude, name }) {
       <MapContainer
         center={position}
         zoom={15}
-        dragging={false}
-        scrollWheelZoom={false}
-        zoomControl={false}
+        // dragging={false}
+        // scrollWheelZoom={false}
+        // zoomControl={false}
         style={{
           width: "100%",
           height: "calc(100vh - 2rem)",

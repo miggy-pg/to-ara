@@ -53,7 +53,7 @@ exports.createAccommodation = async (req, res) => {
     amenities,
   } = req.body;
 
-
+console.log(req.file);
   try {
     const { rows } = await db.query(
       `

@@ -9,7 +9,6 @@ import UserBox from "../UserBox";
 export default function Menu(props) {
   let { sx, page } = props;
 
-  // const [searchResults, setSearchResults] = useState([]);
 
   // Close/Open dropdown profile menu in the header
   const [anchorProfileMenu, setAnchorProfileMenu] = useState(null);
