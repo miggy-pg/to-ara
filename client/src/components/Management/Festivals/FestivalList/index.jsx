@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 
 import { deleteFestival, editFestival } from "../../../../api/festival";
-// import FestivalEdit from "../FestivalEdit";
+import { formatLongDate } from "../../../../utils/formatDate";
 import ModalContainer from "../../../Common/ModalContainer";
 import FestivalEdit from "../FestivalEdit";
 import {
@@ -178,13 +178,13 @@ export default function FestivalList({ props }) {
         </TableCell>
         <TableCell>
           <Typography color="textSecondary" variant="h6">
-            {longitude}
-            {latitude}
+            <strong>Long:</strong> {longitude} <br/>
+            <strong>Lan:</strong> {latitude}
           </Typography>
         </TableCell>
         <TableCell>
           <Typography color="textSecondary" variant="h6">
-            {festival_date}
+            {formatLongDate(festival_date)}
           </Typography>
         </TableCell>
         <TableCell>

@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 import { Box, Container, Grid, useMediaQuery } from "@mui/material";
 
-import Menu from "../../components/Common/Menu";
+import CustomMenu from "../../components/Common/CustomMenu";
 import CustomCard from "../../components/Common/CustomCard";
 import FilterAttraction from "../../components/Management/Attractions/FilterAttraction";
 import useGetAttractions from "../../hooks/useGetAttractions";
@@ -52,6 +52,7 @@ export default function Attractions() {
     isAuth && setFavorite((curAttraction) => [...curAttraction, attraction]);
   };
 
+  // searchbar search location
   const handleOnClickSearch = (e) => {
     e.preventDefault();
 
@@ -67,33 +68,36 @@ export default function Attractions() {
     !queryAttractions.length && setItems(searchResults);
   };
 
+  // filter attractions by location
   const handleChangeLocation = (e) => {
     setFilterLocation(e.target.textContent);
     !e.target.textContent.length && setItems(searchResults);
   };
 
+  const priceFilter = minFee.length > 0 && maxFee.length > 0;
+  const filterLocationLength = filterLocation.length > 0
+
   const handleFilterAttractions = (e) => {
     e.preventDefault();
-
-    filterLocation.length > 0 &&
-      minFee.length > 0 &&
-      maxFee.length > 0 &&
+    
+    filterLocationLength > 0 &&
+      priceFilter &&
       setItems(
         searchResults
           .filter(
             (attr) => 
-            Number(attr.entrance_fee) >= Number(minFee) && Number(attr.entrance_fee) <= Number(maxFee)
+            Number(attr.entrance_fee) >= Number(minFee) && 
+            Number(attr.entrance_fee) <= Number(maxFee)
             )
-          // .filter((attraction) =>
-          //   attraction.address
-          //     ?.toLowerCase()
-          //     .includes(filterLocation.toLowerCase())
-          // )
+          .filter((attraction) =>
+            attraction.address
+              ?.toLowerCase()
+              .includes(filterLocation.toLowerCase())
+          )
           
             );
             
-    minFee.length > 0 &&
-      maxFee.length > 0 &&
+    !filterLocationLength && priceFilter &&
       setItems(
         searchResults.filter(
           (attr) =>
@@ -102,7 +106,7 @@ export default function Attractions() {
         )
       );
 
-    filterLocation.length > 0 &&
+    !priceFilter && filterLocationLength > 0 &&
       setItems(
         searchResults.filter((attraction) =>
           attraction.address
@@ -111,6 +115,7 @@ export default function Attractions() {
         )
       );
   };
+
 
   useEffect(() => {
     setItems(attractions);
@@ -128,7 +133,7 @@ export default function Attractions() {
       }}
     >
       <Container maxWidth="lg">
-        <Menu
+        <CustomMenu
           sx={{
             paddingLeft: isSidebarOpen && lgUp ? "265px" : "",
             backgroundColor: "#ffffff",

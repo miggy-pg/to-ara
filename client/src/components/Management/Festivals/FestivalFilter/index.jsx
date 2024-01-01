@@ -39,9 +39,9 @@ export default function FestivalFilter({
         onChange={(e) => setQueryFestivals(e.target.value)}
         InputProps={{
           endAdornment: (
-            <InputAdornment>
-              <IconButton>
-                <SearchIcon onClick={handleOnClickSearch} />
+            <InputAdornment position="end">
+              <IconButton onClick={handleOnClickSearch}>
+                <SearchIcon/>
               </IconButton>
             </InputAdornment>
           ),

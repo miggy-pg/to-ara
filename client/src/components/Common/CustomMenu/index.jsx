@@ -6,7 +6,7 @@ import { AppBar, Box, Toolbar, Button, CardContent } from "@mui/material";
 
 import UserBox from "../UserBox";
 
-export default function Menu(props) {
+export default function CustomMenu(props) {
   let { sx, page } = props;
 
 

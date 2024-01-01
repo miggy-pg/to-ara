@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import { onRegistration } from "../../../api/auth";
 import { Link } from "react-router-dom";
-import Menu from "../Menu";
+import CustomMenu from "../CustomMenu";
 import { useDispatch } from "react-redux";
 import {
   FAILED_CREATE_USER,
@@ -64,7 +64,7 @@ export default function Register() {
       }}
     >
       <Container maxWidth="lg">
-        <Menu
+        <CustomMenu
           sx={{
             paddingLeft: isSidebarOpen && lgUp ? "265px" : "",
             backgroundColor: "#ffffff",

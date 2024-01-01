@@ -23,7 +23,7 @@ import PlaceIcon from "@mui/icons-material/Place";
 import DirectionsBusIcon from "@mui/icons-material/DirectionsBus";
 import { styled } from "@mui/material/styles";
 
-import Menu from "../../../Common/Menu";
+import CustomMenu from "../../../Common/CustomMenu";
 import MapLocator from "../../../Common/MapLocator";
 import useLocalStorageState from "../../../../hooks/useLocalStorageState";
 import { getAccommodation } from "../../../../api/accommodation";
@@ -111,7 +111,7 @@ export default function AccommodationDetail() {
       sx={{ mt: 15, pb: 6, boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.1)" }}
       maxWidth="lg"
     >
-      <Menu
+      <CustomMenu
         sx={{
           paddingLeft: isSidebarOpen && lgUp ? "265px" : "",
           backgroundColor: "#ffffff",

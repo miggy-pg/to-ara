@@ -221,8 +221,8 @@ export default function AccommodationList({ props }) {
         </TableCell>
         <TableCell>
           <StyledTypography color="textSecondary" variant="h6">
-            {longitude}
-            {latitude}
+            <strong>Long:</strong> {longitude} <br/>
+            <strong>Lan:</strong> {latitude}
           </StyledTypography>
         </TableCell>
         <TableCell>

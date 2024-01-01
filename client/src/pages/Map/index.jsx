@@ -4,7 +4,7 @@ import { MapContainer } from "react-leaflet/MapContainer";
 import { Marker, Popup } from "react-leaflet";
 import { TileLayer } from "react-leaflet/TileLayer";
 
-import Menu from "../../components/Common/Menu";
+import CustomMenu from "../../components/Common/CustomMenu";
 import "leaflet/dist/leaflet.css";
 import { getAttractions } from "../../api/attraction";
 import useGetAttractions from "../../hooks/useGetAttractions";
@@ -74,7 +74,7 @@ export default function Map() {
         >
           Browse Map
         </Typography>
-        <Menu
+        <CustomMenu
           sx={{
             paddingLeft: isSidebarOpen && lgUp ? "265px" : "",
             backgroundColor: "#ffffff",

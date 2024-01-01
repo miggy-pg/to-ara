@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 import { Box, Container, Grid, useMediaQuery } from "@mui/material";
 
-import Menu from "../../components/Common/Menu";
+import Menu from "../../components/Common/CustomMenu";
 import CustomCard from "../../components/Common/CustomCard";
 import FestivalFilter from "../../components/Management/Festivals/FestivalFilter";
 import useGetFestivals from "../../hooks/useGetFestivals";
@@ -32,10 +32,10 @@ export default function Festivals() {
   // We are using custom pagination hook
   const [indexOfLastItem, setIndexOfLastItem] = useState(null);
   const [indexOfFirstItem, setIndexOfFirstItem] = useState(null);
-
-  const [favorite, setFavorite] = useLocalStorageState([], "favoriteFestivals");
-
+  
   const navigate = useNavigate();
+  
+  const [favorite, setFavorite] = useLocalStorageState([], "favoriteFestivals");
 
   // Fetch festivals from our custom hook
   const { isLoading } = useGetFestivals();
@@ -66,12 +66,12 @@ export default function Festivals() {
     !e.target.textContent.length && setItems(searchResults);
   };
 
+  const dateRange = fromDateRange?.length > 0 && toDateRange?.length > 0
+
   const handleFilterFestivals = (e) => {
     e.preventDefault();
 
-    filterLocation.length > 0 &&
-      fromDateRange.length > 0 &&
-      toDateRange.length > 0 &&
+    filterLocation?.length > 0 && dateRange &&
       setItems(
         searchResults
           .filter((attraction) =>
@@ -88,8 +88,7 @@ export default function Festivals() {
           )
       );
 
-    fromDateRange.length > 0 &&
-      toDateRange.length > 0 &&
+    !filterLocation && dateRange &&
       setItems(
         searchResults.filter(
           (festival) =>
@@ -100,7 +99,7 @@ export default function Festivals() {
         )
       );
 
-    filterLocation.length > 0 &&
+    filterLocation?.length > 0 &&
       setItems(
         searchResults.filter((attraction) =>
           attraction.address
@@ -108,10 +107,6 @@ export default function Festivals() {
             .includes(filterLocation.toLowerCase())
         )
       );
-
-    setFilterLocation("");
-    fromDateRange("");
-    toDateRange("");
   };
 
   useEffect(() => {

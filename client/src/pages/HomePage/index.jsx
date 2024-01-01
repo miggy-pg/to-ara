@@ -13,7 +13,7 @@ import {
   TextField,
 } from "@mui/material";
 
-import Menu from "../../components/Common/Menu";
+import CustomMenu from "../../components/Common/CustomMenu";
 import "./styles.css";
 
 const MainContent = styled(Box)(
@@ -44,7 +44,7 @@ export default function HomePage() {
       }}
     >
       <Container maxWidth="lg">
-        <Menu
+        <CustomMenu
           sx={{
             paddingLeft: isSidebarOpen && lgUp ? "265px" : "",
             backgroundColor: "#ffffff",

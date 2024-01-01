@@ -21,7 +21,7 @@ import {
   setUserRole,
 } from "../../../redux/store/authSlice";
 import { onLogin } from "../../../api/auth";
-import Menu from "../Menu";
+import CustomMenu from "../CustomMenu";
 
 export default function Login() {
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
@@ -66,7 +66,7 @@ export default function Login() {
       }}
     >
       <Container maxWidth="lg">
-        <Menu
+        <CustomMenu
           sx={{
             paddingLeft: isSidebarOpen && lgUp ? "265px" : "",
             backgroundColor: "#ffffff",

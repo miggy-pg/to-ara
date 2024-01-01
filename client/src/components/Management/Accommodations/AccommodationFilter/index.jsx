@@ -42,8 +42,8 @@ export default function AccommodationFilter({
         InputProps={{
           endAdornment: (
             <InputAdornment>
-              <IconButton>
-                <SearchIcon onClick={handleOnClickSearch} />
+              <IconButton onClick={handleOnClickSearch}>
+                <SearchIcon/>
               </IconButton>
             </InputAdornment>
           ),

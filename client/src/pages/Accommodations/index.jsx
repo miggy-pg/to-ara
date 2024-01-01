@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { Box, Container, Grid, useMediaQuery } from "@mui/material";
 
-import Menu from "../../components/Common/Menu";
+import CustomMenu from "../../components/Common/CustomMenu";
 import CustomCard from "../../components/Common/CustomCard";
 import useGetAccommodations from "../../hooks/useGetAccommodation";
 import AccommodationFilter from "../../components/Management/Accommodations/AccommodationFilter";
@@ -152,7 +152,7 @@ export default function Accommodations() {
       }}
     >
       <Container maxWidth="lg">
-        <Menu
+        <CustomMenu
           sx={{
             paddingLeft: isSidebarOpen && lgUp ? "265px" : "",
             backgroundColor: "#ffffff",

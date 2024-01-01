@@ -1,7 +1,7 @@
 // @mui material components
 import { Container, Grid, Box, Tabs, Tab, useMediaQuery } from "@mui/material";
 import { useState } from "react";
-import Menu from "../../components/Common/Menu";
+import CustomMenu from "../../components/Common/CustomMenu";
 import useLocalStorageState from "../../hooks/useLocalStorageState";
 import styled from "styled-components";
 import ProfileUserDetails from "../../components/Management/ProfileUserDetails";
@@ -47,7 +47,7 @@ export default function Profile() {
       }}
     >
       <Container maxWidth="lg">
-        <Menu
+        <CustomMenu
           sx={{
             paddingLeft: isSidebarOpen && lgUp ? "265px" : "",
             backgroundColor: "#ffffff",

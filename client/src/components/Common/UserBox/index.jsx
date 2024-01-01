@@ -1,3 +1,6 @@
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+
 import {
   Box,
   Menu,
@@ -11,8 +14,6 @@ import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 
 import useProtectedInfo from "../../../hooks/useProtectedInfo";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
 
 export default function UserBox({
   handleOnClickProfileMenu,
