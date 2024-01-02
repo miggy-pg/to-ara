@@ -23,13 +23,13 @@ exports.getAttraction = async (req, res) => {
       "SELECT * from attraction where id = $1",
       [req.params.id]
     );
-    const { rows: attractions } = await db.query("SELECT * FROM attraction");
+    const { rows: accommodations } = await db.query("SELECT * FROM accommodation");
 
     res.status(200).json({
       status: "succes",
       data: {
         currAttraction: getAttraction,
-        attractions: attractions,
+        accommodations: accommodations,
       },
     });
   } catch (err) {

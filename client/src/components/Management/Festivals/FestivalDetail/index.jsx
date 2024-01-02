@@ -66,11 +66,11 @@ const responsive = {
 export default function FestivalDetail() {
   const { isAuth } = useSelector((state) => state.auth);
 
-  const [festivals, setFestivals] = useState({});
+  const [accommodations, setAccommodations] = useState({});
   const [currFestival, setCurrFestival] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
-  console.log("festivals: ", festivals);
+  console.log("accommodations: ", accommodations);
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -112,7 +112,7 @@ export default function FestivalDetail() {
     async function getAPIFestival() {
       try {
         const { data: currFestival, isLoading } = await getFestival(id);
-        setFestivals(currFestival?.data?.festivals);
+        setAccommodations(currFestival?.data?.accommodations);
         setCurrFestival(currFestival?.data?.currFestival?.[0]);
         setIsLoading(isLoading);
       } catch (error) {
@@ -126,7 +126,7 @@ export default function FestivalDetail() {
     isLoading,
     currFestival.latitude,
     currFestival.longitude,
-    !isLoading && festivals
+    !isLoading && accommodations
   );
 
   console.log("nearby: ", nearby);

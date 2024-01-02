@@ -25,11 +25,14 @@ export default function findNearbyCoordinates(
 
   !isLoading &&
     allCoordinates.forEach((coord) => {
+      // Do not include any accommodations that has the same coordinates as the festival
+      const currPos = coord.latitude && coord.latitude
+
       const distance = calculateDistance(
         targetLat,
         targetLon,
-        targetLat !== coord.latitude && coord.latitude,
-        targetLon !== coord.longitude && coord.longitude
+        targetLat !== currPos,
+        targetLon !== currPos
       );
       if (distance <= 10) {
         // Check if the distance is within 10km (adjust as needed)

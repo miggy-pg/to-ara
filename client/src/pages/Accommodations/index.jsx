@@ -34,7 +34,7 @@ export default function Accommodations() {
   const [maxPrice, setMaxPrice] = useState("");
 
   // useState for filter attractions
-  const [filterLocation, setFilterLocation] = useState();
+  const [filterLocation, setFilterLocation] = useState("");
 
   // We are using custom pagination hook
   const [indexOfLastItem, setIndexOfLastItem] = useState(null);
@@ -84,36 +84,14 @@ export default function Accommodations() {
     !e.target.textContent.length && setItems(searchResults);
   };
 
+  
   const handleFilterAccommodations = (e) => {
     e.preventDefault();
+    
+    const priceRange = minPrice?.length > 0 && maxPrice?.length > 0
 
-    accommodationStatus.length > 0 &&
-      setItems(
-        searchResults.filter(
-          (accommodation) => accommodation?.status === accommodationStatus
-        )
-      );
-
-    filterLocation.length > 0 &&
-      setItems(
-        searchResults.filter((accommodation) =>
-          accommodation.address
-            ?.toLowerCase()
-            .includes(filterLocation.toLowerCase())
-        )
-      );
-
-    minPrice.length > 0 &&
-      maxPrice.length > 0 &&
-      setItems(
-        searchResults.filter(
-          (attr) => attr.price >= minPrice && attr.price <= maxPrice
-        )
-      );
-
-    filterLocation.length > 0 &&
-      minPrice.length > 0 &&
-      maxPrice.length > 0 &&
+    try{
+      filterLocation.length > 0 && priceRange &&
       accommodationStatus.length > 0 &&
       setItems(
         searchResults
@@ -130,13 +108,44 @@ export default function Accommodations() {
             (accommodation) => accommodation?.status === accommodationStatus
           )
       );
+    !filterLocation && priceRange &&
+      setItems(
+        searchResults.filter(
+          (attr) => attr.price >= minPrice && attr.price <= maxPrice
+          )
+        );
+          
+    accommodationStatus.length > 0 &&
+      setItems(
+        searchResults.filter(
+          (accommodation) => accommodation?.status === accommodationStatus
+        )
+      );
 
-    setFilterLocation("");
-    setAccommodationStatus("");
-    setMinPrice("");
-    setMinPrice("");
-  };
+    filterLocation.length > 0 &&
+      setItems(
+        searchResults.filter((accommodation) =>
+          accommodation.address
+            ?.toLowerCase()
+            .includes(filterLocation.toLowerCase())
+        )
+      );
+    }
+    catch(err){
+      console.log(err)
+    }
+    finally{
+      setFilterLocation("");
+      setAccommodationStatus("");
+      setMinPrice("");
+      setMaxPrice("");
+    }
 
+    };
+
+  console.log("minPrice", minPrice);
+  console.log("maxPrice", maxPrice);
+  console.log();
   useEffect(() => {
     setItems(accommodations);
   }, [accommodations]);
