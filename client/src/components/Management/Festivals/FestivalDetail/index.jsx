@@ -314,7 +314,8 @@ export default function FestivalDetail() {
                             textAlign: "center",
                           }}
                         >
-                          {accommodation?.name} - {accommodation?.price}
+                          {accommodation?.name} - {accommodation?.price || "No price"}
+
                         </Typography>
                         <Typography
                           variant="h4"

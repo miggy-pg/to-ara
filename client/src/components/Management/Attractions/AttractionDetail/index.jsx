@@ -67,7 +67,7 @@ const responsive = {
 export default function AttractionDetail() {
   const { isAuth } = useSelector((state) => state.auth);
 
-  const [attractions, setAttractions] = useState({});
+  const [accommodations, setAccommodations] = useState({});
   const [currAttraction, setCurrAttraction] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
@@ -115,7 +115,7 @@ export default function AttractionDetail() {
     async function getAPIAttraction() {
       try {
         const { data: currAttraction, isLoading } = await getAttraction(id);
-        setAttractions(currAttraction?.data?.attractions);
+        setAccommodations(currAttraction?.data?.accommodations);
         setCurrAttraction(currAttraction?.data?.currAttraction?.[0]);
         setIsLoading(isLoading);
       } catch (error) {
@@ -124,13 +124,16 @@ export default function AttractionDetail() {
     }
     getAPIAttraction();
   }, []);
-
+  
+  console.log("accommodations", accommodations);
   const nearby = findNearbyCoordinates(
     isLoading,
     currAttraction.latitude,
     currAttraction.longitude,
-    !isLoading && attractions
+    !isLoading && accommodations
   );
+
+  console.log("nearby", nearby);
 
   return (
     <Container
@@ -338,7 +341,7 @@ export default function AttractionDetail() {
                             textAlign: "center",
                           }}
                         >
-                          {accommodation?.name} - {accommodation?.price}
+                          {accommodation?.name} - {accommodation?.price || "No price"}
                         </Typography>
                         <Typography
                           variant="h4"

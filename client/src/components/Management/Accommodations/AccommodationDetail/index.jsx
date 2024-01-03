@@ -30,6 +30,7 @@ import { getAccommodation } from "../../../../api/accommodation";
 
 import "./styles.css";
 import "react-multi-carousel/lib/styles.css";
+import Spinner from "../../../Common/Spinner";
 
 const CardCover = styled(Card)(
   ({ theme }) => `
@@ -106,6 +107,8 @@ export default function AccommodationDetail() {
     getAPIAccomodation();
   }, []);
 
+  if (isLoading) return <Spinner/>
+
   return (
     <Container
       sx={{ mt: 15, pb: 6, boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.1)" }}
@@ -160,7 +163,7 @@ export default function AccommodationDetail() {
               mb: 3,
             }}
           >
-            {currAccomodation?.status == "Available" ? (
+            {!isLoading && currAccomodation.status == "Available" ? (
               <Typography
                 sx={{
                   backgroundColor: "#689597",

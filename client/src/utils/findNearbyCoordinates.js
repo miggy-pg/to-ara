@@ -22,17 +22,16 @@ export default function findNearbyCoordinates(
   allCoordinates
 ) {
   const nearbyCoordinates = [];
-
+  console.log("allCoordinates", allCoordinates);
   !isLoading &&
     allCoordinates.forEach((coord) => {
       // Do not include any accommodations that has the same coordinates as the festival
-      const currPos = coord.latitude && coord.latitude
-
+      
       const distance = calculateDistance(
         targetLat,
         targetLon,
-        targetLat !== currPos,
-        targetLon !== currPos
+        targetLat !== coord.latitude && coord.latitude,
+        targetLon !== coord.longitude && coord.longitude
       );
       if (distance <= 10) {
         // Check if the distance is within 10km (adjust as needed)

@@ -143,9 +143,6 @@ export default function Accommodations() {
 
     };
 
-  console.log("minPrice", minPrice);
-  console.log("maxPrice", maxPrice);
-  console.log();
   useEffect(() => {
     setItems(accommodations);
   }, [accommodations]);
