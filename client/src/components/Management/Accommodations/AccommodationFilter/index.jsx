@@ -133,6 +133,9 @@ export default function AccommodationFilter({
               value={minPrice}
               onChange={(e) => setMinPrice(e.target.value)}
               sx={{ height: "20%", width: "100%", fontSize: "10px" }}
+              InputProps={{
+              inputProps: { min: 0 }
+            }}
             />
           </Grid>
           <Grid item xs={6}>
@@ -142,6 +145,9 @@ export default function AccommodationFilter({
               value={maxPrice}
               onChange={(e) => setMaxPrice(e.target.value)}
               sx={{ height: "20%", width: "100%", fontSize: "10px" }}
+              InputProps={{
+                inputProps: { min: 0 }
+              }}
             />
           </Grid>
         </Grid>

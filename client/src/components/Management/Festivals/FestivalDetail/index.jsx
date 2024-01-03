@@ -70,7 +70,6 @@ export default function FestivalDetail() {
   const [currFestival, setCurrFestival] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
-  console.log("accommodations: ", accommodations);
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -122,14 +121,15 @@ export default function FestivalDetail() {
     getAPIFestival();
   }, []);
 
+  if (isLoading) return;
+
   const nearby = findNearbyCoordinates(
     isLoading,
     currFestival.latitude,
     currFestival.longitude,
-    !isLoading && accommodations
+    accommodations
   );
 
-  console.log("nearby: ", nearby);
   return (
     <Container
       sx={{ mt: 15, pb: 6, boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.1)" }}
@@ -244,18 +244,11 @@ export default function FestivalDetail() {
           </Box>
         </Grid>
 
-        {/* MAP LOCATION */}
-        <Grid item xs={3}>
-          <Box display="flex" alignItems="center">
-            {!isLoading && (
-              <MapLocator
-                latitude={currFestival?.latitude}
-                longitude={currFestival?.longitude}
-                name={currFestival?.name}
-              />
-            )}
-          </Box>
-        </Grid>
+        <MapLocator
+          latitude={currFestival?.latitude}
+          longitude={currFestival?.longitude}
+          name={currFestival?.name}
+        />
 
         <Grid item xs={12}>
           {nearby.length > 0 ? (
@@ -314,8 +307,8 @@ export default function FestivalDetail() {
                             textAlign: "center",
                           }}
                         >
-                          {accommodation?.name} - {accommodation?.price || "No price"}
-
+                          {accommodation?.name} -{" "}
+                          {accommodation?.price || "No price"}
                         </Typography>
                         <Typography
                           variant="h4"

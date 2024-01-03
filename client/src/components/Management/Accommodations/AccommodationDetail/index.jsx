@@ -30,7 +30,6 @@ import { getAccommodation } from "../../../../api/accommodation";
 
 import "./styles.css";
 import "react-multi-carousel/lib/styles.css";
-import Spinner from "../../../Common/Spinner";
 
 const CardCover = styled(Card)(
   ({ theme }) => `
@@ -44,11 +43,9 @@ const CardCover = styled(Card)(
 export default function AccommodationDetail() {
   const { isAuth } = useSelector((state) => state.auth);
 
-  const [accomodations, setAccomodations] = useState({});
-  const [currAccomodation, setCurrAccomodation] = useState({});
+  const [accommodation, setAccommodation] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
-  console.log("accomodations: ", accomodations);
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -82,23 +79,21 @@ export default function AccommodationDetail() {
   const handleAdd = () => {
     !isAuth && navigate("/user/login");
 
-    const newAddedFavorite = {
-      image: currAccomodation.image,
-      name: currAccomodation.name,
-      description: currAccomodation.description,
+    const newFavorite = {
+      image: accommodation.image,
+      name: accommodation.name,
+      description: accommodation.description,
       id: id,
     };
-    isAuth && !isFavorite && handleAddFavorite(newAddedFavorite);
+
+    isAuth && !isFavorite && handleAddFavorite(newFavorite);
   };
 
   useEffect(() => {
     async function getAPIAccomodation() {
       try {
-        const { data: currAccomodation, isLoading } = await getAccommodation(
-          id
-        );
-        setAccomodations(currAccomodation?.data?.accomodations);
-        setCurrAccomodation(currAccomodation?.data?.currAccomodation?.[0]);
+        const { data: accommodation, isLoading } = await getAccommodation(id);
+        setAccommodation(accommodation?.accommodation[0]);
         setIsLoading(isLoading);
       } catch (error) {
         console.log(error);
@@ -107,7 +102,7 @@ export default function AccommodationDetail() {
     getAPIAccomodation();
   }, []);
 
-  if (isLoading) return <Spinner/>
+  if (isLoading) return;
 
   return (
     <Container
@@ -143,8 +138,8 @@ export default function AccommodationDetail() {
           <CardCover>
             <CardMedia
               image={
-                currAccomodation?.image
-                  ? `http://localhost:4000/images/accommodations/${currAccomodation?.image}`
+                accommodation?.image
+                  ? `http://localhost:4000/images/accommodations/${accommodation?.image}`
                   : "http://localhost:4000/images/accommodations/image-placeholder.jpg"
               }
               sx={{
@@ -163,7 +158,7 @@ export default function AccommodationDetail() {
               mb: 3,
             }}
           >
-            {!isLoading && currAccomodation.status == "Available" ? (
+            {accommodation.status == "Available" ? (
               <Typography
                 sx={{
                   backgroundColor: "#689597",
@@ -177,7 +172,7 @@ export default function AccommodationDetail() {
                 }}
                 variant="h5"
               >
-                {currAccomodation?.status || "Available"}
+                {accommodation?.status || "Available"}
               </Typography>
             ) : (
               <Typography
@@ -193,7 +188,7 @@ export default function AccommodationDetail() {
                 }}
                 variant="h5"
               >
-                {currAccomodation?.status || "Unavailable"}
+                {accommodation?.status || "Unavailable"}
               </Typography>
             )}
 
@@ -229,12 +224,12 @@ export default function AccommodationDetail() {
                 />
               )}
               <Typography sx={{ ml: 0 }} variant="h4" component="div">
-                <h1>{currAccomodation?.name || "No name available"}</h1>
+                <h1>{accommodation?.name || "No name available"}</h1>
               </Typography>
             </Box>
 
             <Typography variant="subtitle2" sx={{ mb: 2 }}>
-              {currAccomodation?.description ||
+              {accommodation?.description ||
                 "No description available for this record"}
             </Typography>
 
@@ -247,7 +242,7 @@ export default function AccommodationDetail() {
                 <PlaceIcon />
                 <Typography variant="h4" sx={{ ml: 2 }}>
                   <strong>
-                    {currAccomodation?.address || "No address available"}
+                    {accommodation?.address || "No address available"}
                   </strong>
                 </Typography>
               </Box>
@@ -266,7 +261,7 @@ export default function AccommodationDetail() {
                 &nbsp;
                 <Typography variant="h4" sx={{ ml: 2 }}>
                   <strong>
-                    {currAccomodation?.price || "No price available"}
+                    {accommodation?.price || "No price available"}
                   </strong>
                 </Typography>
               </Box>
@@ -286,9 +281,8 @@ export default function AccommodationDetail() {
             </Box>
 
             <Typography sx={{ ml: 5, width: "50%" }} variant="h5">
-              {(!isLoading &&
-                String(currAccomodation.amenities) !== "null" &&
-                JSON.stringify(currAccomodation?.amenities)
+              {(String(accommodation.amenities) !== "null" &&
+                JSON.stringify(accommodation?.amenities)
                   .split(",")
                   .map((amenity) => (
                     <Typography
@@ -322,23 +316,16 @@ export default function AccommodationDetail() {
               </Box>
             </Box>
             <Typography sx={{ ml: 5, pr: 10, mt: 2 }} variant="h5">
-              {currAccomodation?.direction || "No direction available"}
+              {accommodation?.direction || "No direction available"}
             </Typography>
           </Box>
         </Grid>
 
-        {/* MAP LOCATION */}
-        <Grid item xs={3}>
-          <Box display="flex" alignItems="center">
-            {!isLoading && (
-              <MapLocator
-                latitude={currAccomodation.latitude}
-                longitude={currAccomodation.longitude}
-                name={currAccomodation.name}
-              />
-            )}
-          </Box>
-        </Grid>
+        <MapLocator
+          latitude={accommodation.latitude}
+          longitude={accommodation.longitude}
+          name={accommodation.name}
+        />
       </Grid>
     </Container>
   );

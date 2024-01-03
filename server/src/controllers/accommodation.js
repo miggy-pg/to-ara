@@ -19,20 +19,14 @@ exports.protected = async (req, res) => {
 
 exports.getAccommodation = async (req, res) => {
   try {
-    const { rows: currAccomodation } = await db.query(
+    const { rows: accommodation } = await db.query(
       "SELECT * from accommodation where id = $1",
       [req.params.id]
-    );
-    const { rows: accomodations } = await db.query(
-      "SELECT * FROM accommodation"
     );
 
     res.status(200).json({
       status: "succes",
-      data: {
-        currAccomodation: currAccomodation,
-        accomodations: accomodations,
-      },
+      accommodation: accommodation,
     });
   } catch (err) {
     console.log(err);
@@ -53,7 +47,7 @@ exports.createAccommodation = async (req, res) => {
     amenities,
   } = req.body;
 
-console.log(req.file);
+  console.log(req.file);
   try {
     const { rows } = await db.query(
       `

@@ -124,16 +124,15 @@ export default function AttractionDetail() {
     }
     getAPIAttraction();
   }, []);
-  
-  console.log("accommodations", accommodations);
+
+  if (isLoading) return;
+
   const nearby = findNearbyCoordinates(
     isLoading,
     currAttraction.latitude,
     currAttraction.longitude,
-    !isLoading && accommodations
+    accommodations
   );
-
-  console.log("nearby", nearby);
 
   return (
     <Container
@@ -271,18 +270,11 @@ export default function AttractionDetail() {
           </Box>
         </Grid>
 
-        {/* MAP LOCATION */}
-        <Grid item xs={3}>
-          <Box display="flex" alignItems="center">
-            {!isLoading && (
-              <MapLocator
-                latitude={currAttraction.latitude}
-                longitude={currAttraction.longitude}
-                name={currAttraction.name}
-              />
-            )}
-          </Box>
-        </Grid>
+        <MapLocator
+          latitude={currAttraction.latitude}
+          longitude={currAttraction.longitude}
+          name={currAttraction.name}
+        />
 
         <Grid item xs={12}>
           {nearby.length > 0 ? (
@@ -341,7 +333,8 @@ export default function AttractionDetail() {
                             textAlign: "center",
                           }}
                         >
-                          {accommodation?.name} - {accommodation?.price || "No price"}
+                          {accommodation?.name} -{" "}
+                          {accommodation?.price || "No price"}
                         </Typography>
                         <Typography
                           variant="h4"

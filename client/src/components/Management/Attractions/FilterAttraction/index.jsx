@@ -110,6 +110,9 @@ export default function FilterAttraction({
               value={minFee}
               onChange={(e) => setMinFee(e.target.value)}
               sx={{ height: "20%", width: "100%", fontSize: "10px" }}
+              InputProps={{
+                inputProps: { min: 0 }
+              }}
             />
           </Grid>
           <Grid item xs={6}>
@@ -119,6 +122,9 @@ export default function FilterAttraction({
               value={maxFee}
               onChange={(e) => setMaxFee(e.target.value)}
               sx={{ height: "20%", width: "100%", fontSize: "10px" }}
+              InputProps={{
+                inputProps: { min: 0 }
+              }}
             />
           </Grid>
         </Grid>
