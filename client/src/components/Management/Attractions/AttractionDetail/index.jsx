@@ -32,10 +32,11 @@ import MapLocator from "../../../Common/MapLocator";
 import useLocalStorageState from "../../../../hooks/useLocalStorageState";
 import findNearbyCoordinates from "../../../../utils/findNearbyCoordinates";
 import { getAttraction } from "../../../../api/attraction";
+import { convertTo12HourFormat } from "../../../../utils/formatTime";
 
 import "./styles.css";
 import "react-multi-carousel/lib/styles.css";
-import { convertTo12HourFormat } from "../../../../utils/formatTime";
+import AddFavorite from "../../../Common/AddFavorite";
 
 const CardCover = styled(Card)(
   ({ theme }) => `
@@ -207,17 +208,7 @@ export default function AttractionDetail() {
                   }
                 />
               ) : (
-                <FormControlLabel
-                  onClick={handleAdd}
-                  control={
-                    <Checkbox
-                      icon={<FavoriteOutlinedIcon />}
-                      checkedIcon={<FavoriteBorderOutlinedIcon />}
-                      checked={false}
-                      name="checkedH"
-                    />
-                  }
-                />
+                <AddFavorite handleAdd={handleAdd} />
               )}
               <Typography sx={{ ml: 0 }} variant="h4" component="div">
                 <h1>{currAttraction?.name}</h1>
