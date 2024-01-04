@@ -181,7 +181,9 @@ export default function AccommodationList({ props }) {
         <TableCell>
           <Typography color="textSecondary" variant="h6">
             <img
-              src={`http://localhost:4000/images/accommodations/${image ? image : "image-placeholder.jpg"}`}
+              src={`http://localhost:4000/images/accommodations/${
+                image ? image : "image-placeholder.jpg"
+              }`}
               width="100px"
               height="100px"
             />
@@ -221,7 +223,7 @@ export default function AccommodationList({ props }) {
         </TableCell>
         <TableCell>
           <StyledTypography color="textSecondary" variant="h6">
-            <strong>Long:</strong> {longitude} <br/>
+            <strong>Long:</strong> {longitude} <br />
             <strong>Lan:</strong> {latitude}
           </StyledTypography>
         </TableCell>
@@ -247,7 +249,8 @@ export default function AccommodationList({ props }) {
         </TableCell>
         <TableCell>
           <StyledTypography color="textSecondary" variant="h6">
-            {String(amenities) !== "null" &&
+            {String(amenities).length > 0 &&
+              String(amenities) !== "null" &&
               JSON.stringify(amenities)
                 .split(",")
                 .map(

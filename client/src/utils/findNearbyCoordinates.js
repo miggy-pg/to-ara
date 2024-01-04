@@ -15,7 +15,7 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
 }
 
 // Function to find nearby coordinates within 10km radius
-export default function findNearbyCoordinates(
+export function findNearbyCoordinates(
   isLoading,
   targetLat,
   targetLon,
@@ -26,7 +26,7 @@ export default function findNearbyCoordinates(
   !isLoading &&
     allCoordinates.forEach((coord) => {
       // Do not include any accommodations that has the same coordinates as the festival
-      
+
       const distance = calculateDistance(
         targetLat,
         targetLon,

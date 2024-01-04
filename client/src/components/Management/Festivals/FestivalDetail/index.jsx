@@ -1,49 +1,24 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Navigate, useNavigate, useParams } from "react-router";
-import { Link } from "react-router-dom";
+import { useParams } from "react-router";
 
-import {
-  Typography,
-  Card,
-  Tooltip,
-  CardMedia,
-  Container,
-  Box,
-  Grid,
-  IconButton,
-  Divider,
-  CardHeader,
-  useMediaQuery,
-  FormControlLabel,
-  Checkbox,
-} from "@mui/material";
-import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
-import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import ArrowBackTwoToneIcon from "@mui/icons-material/ArrowBackTwoTone";
+import { Typography, Container, Box, Grid, useMediaQuery } from "@mui/material";
 import PlaceIcon from "@mui/icons-material/Place";
-import Carousel from "react-multi-carousel";
-import RoofingIcon from "@mui/icons-material/Roofing";
-import { styled } from "@mui/material/styles";
 
+import AddFavoriteIcon from "../../../Common/Icons/AddFavoriteIcon";
+import BackButton from "../../../Common/Buttons/BackButton";
+import CardCover from "../../../Common/CardCover";
 import CustomMenu from "../../../Common/CustomMenu";
+import DeleteFavoriteIcon from "../../../Common/Icons/DeleteFavoriteIcon";
 import MapLocator from "../../../Common/MapLocator";
+import Recommendation from "../../../Common/Recommedation";
 import useLocalStorageState from "../../../../hooks/useLocalStorageState";
-import findNearbyCoordinates from "../../../../utils/findNearbyCoordinates";
 import { getFestival } from "../../../../api/festival";
-
-import "./styles.css";
-import "react-multi-carousel/lib/styles.css";
+import { findNearbyCoordinates } from "../../../../utils/findNearbyCoordinates";
 import { formatLongDate } from "../../../../utils/formatDate";
 
-const CardCover = styled(Card)(
-  ({ theme }) => `
-    position: relative;
-    .MuiCardMedia-root {
-      height: ${theme.spacing(46)};
-    }
-`
-);
+import "react-multi-carousel/lib/styles.css";
+import "./styles.css";
 
 const responsive = {
   desktop: {
@@ -64,14 +39,12 @@ const responsive = {
 };
 
 export default function FestivalDetail() {
+  const { id } = useParams();
   const { isAuth } = useSelector((state) => state.auth);
 
   const [accommodations, setAccommodations] = useState({});
   const [currFestival, setCurrFestival] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-
-  const { id } = useParams();
-  const navigate = useNavigate();
 
   const [favorite, setFavorite] = useLocalStorageState([], "favoriteFestivals");
 
@@ -81,31 +54,6 @@ export default function FestivalDetail() {
 
   const [isSidebarOpen] = useState(true);
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
-
-  const handleDeleteFavorite = (id) => {
-    !isAuth && <Navigate to="user/login" />;
-
-    isAuth &&
-      setFavorite((favoriteFestival) =>
-        favoriteFestival.filter((attr) => parseInt(attr.id) !== parseInt(id))
-      );
-  };
-
-  const handleAddFavorite = (festival) => {
-    setFavorite((curFestival) => [...curFestival, festival]);
-  };
-
-  const handleAdd = () => {
-    !isAuth && navigate("/user/login");
-
-    const newAddedFavorite = {
-      image: currFestival.image,
-      name: currFestival.name,
-      description: currFestival.description,
-      id: id,
-    };
-    isAuth && !isFavorite && handleAddFavorite(newAddedFavorite);
-  };
 
   useEffect(() => {
     async function getAPIFestival() {
@@ -146,34 +94,12 @@ export default function FestivalDetail() {
       <Grid container spacing={2}>
         <Grid item xs={0.7}>
           <Box display="flex" alignItems="center">
-            <Tooltip arrow placement="top" title="Go back">
-              <IconButton
-                onClick={(e) => {
-                  e.preventDefault();
-                  navigate(-1);
-                }}
-                color="primary"
-                sx={{ p: 2 }}
-              >
-                <ArrowBackTwoToneIcon />
-              </IconButton>
-            </Tooltip>
+            <BackButton />
           </Box>
         </Grid>
         <Grid item xs={8}>
-          <CardCover>
-            <CardMedia
-              image={
-                currFestival?.image
-                  ? `http://localhost:4000/images/festivals/${currFestival?.image}`
-                  : "http://localhost:4000/images/festivals/image_placeholder.jpg"
-              }
-              sx={{
-                width: "100%",
-                height: "100%",
-              }}
-            />
-          </CardCover>
+          <CardCover record={currFestival} recordPath="festivals" />
+
           <Box
             sx={{
               display: "flex",
@@ -191,32 +117,23 @@ export default function FestivalDetail() {
               }}
             >
               {isFavorite ? (
-                <FormControlLabel
-                  onClick={() => handleDeleteFavorite(id)}
-                  control={
-                    <Checkbox
-                      icon={<FavoriteOutlinedIcon />}
-                      checkedIcon={<FavoriteBorderOutlinedIcon />}
-                      checked={isFavorite}
-                      name="checkedH"
-                    />
-                  }
+                <DeleteFavoriteIcon
+                  detailId={id}
+                  isFavorite={isFavorite}
+                  isAuth={isAuth}
+                  setFavorite={setFavorite}
                 />
               ) : (
-                <FormControlLabel
-                  onClick={handleAdd}
-                  control={
-                    <Checkbox
-                      icon={<FavoriteOutlinedIcon />}
-                      checkedIcon={<FavoriteBorderOutlinedIcon />}
-                      checked={false}
-                      name="checkedH"
-                    />
-                  }
+                <AddFavoriteIcon
+                  isAuth={isAuth}
+                  isFavorite={isFavorite}
+                  favorite={currFestival}
+                  setFavorite={setFavorite}
+                  detailId={id}
                 />
               )}
               <Typography sx={{ ml: 0 }} variant="h4" component="div">
-                <h1>{currFestival.name}</h1>
+                <h1>{currFestival?.name}</h1>
               </Typography>
             </Box>
             <Typography variant="h4" sx={{ mb: "1rem" }} color="text.primary">
@@ -250,90 +167,7 @@ export default function FestivalDetail() {
           name={currFestival?.name}
         />
 
-        <Grid item xs={12}>
-          {nearby.length > 0 ? (
-            <Card>
-              <Box sx={{ display: "flex", alignItems: "center" }}>
-                <RoofingIcon />
-                <CardHeader title="Recommended Accommodations" />
-              </Box>
-              <Divider />
-              <Carousel
-                responsive={responsive}
-                autoPlay={true}
-                swipeable={true}
-                draggable={true}
-                showDots={true}
-                infinite={true}
-                transitionDuration={10000}
-                partialVisible={false}
-                dotListClass="custom-dot-list-style"
-              >
-                {nearby.map((accommodation, index) => {
-                  return (
-                    <div
-                      className="slider"
-                      key={index}
-                      style={{
-                        objectFit: "cover",
-                        width: "90%",
-                        height: "80%",
-                      }}
-                    >
-                      <Link
-                        to={`/accommodations/${accommodation.id}`}
-                        style={{
-                          textDecoration: "none",
-                          color: "black",
-                        }}
-                      >
-                        <img
-                          src={
-                            accommodation?.image
-                              ? `http://localhost:4000/images/accommodations/${accommodation?.image}`
-                              : "http://localhost:4000/images/accommodations/image-placeholder.jpg"
-                          }
-                          alt={`${accommodation.name}`}
-                          style={{
-                            objectFit: "cover",
-                            width: "100%",
-                            height: "100%",
-                          }}
-                        />
-                        <Typography
-                          variant="h4"
-                          sx={{
-                            fontSize: "0.9rem",
-                            textAlign: "center",
-                          }}
-                        >
-                          {accommodation?.name} -{" "}
-                          {accommodation?.price || "No price"}
-                        </Typography>
-                        <Typography
-                          variant="h4"
-                          sx={{
-                            fontSize: "0.9rem",
-                            textAlign: "center",
-                          }}
-                        >
-                          {accommodation?.status || "No status available"}
-                        </Typography>
-                      </Link>
-                    </div>
-                  );
-                })}
-              </Carousel>
-            </Card>
-          ) : (
-            <Box sx={{ display: "flex", alignItems: "center", ml: 5 }}>
-              <RoofingIcon />
-              <Typography sx={{ ml: 2 }}>
-                No accommodations near the area
-              </Typography>
-            </Box>
-          )}
-        </Grid>
+        <Recommendation nearby={nearby} responsive={responsive} />
       </Grid>
     </Container>
   );

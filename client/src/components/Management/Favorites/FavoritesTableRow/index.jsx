@@ -12,7 +12,7 @@ export default function FavoritesTableRow({ props, routePath }) {
     [],
     `favorite${routePath}`
   );
-  console.log("setFavorite", `favorite${routePath}`);
+  console.log("setFavorite", routePath);
 
   const handleDeleteFavorite = (id) => {
     setFavorite((favorite) =>
@@ -25,7 +25,13 @@ export default function FavoritesTableRow({ props, routePath }) {
       <TableRow>
         <TableCell>
           <Typography color="textSecondary" variant="h6">
-            <img src={`http://localhost:4000/images/${routePath.toLowerCase()}/${ image ? image : "image-placeholder.jpg"}`} width="100px" height="100px" />
+            <img
+              src={`http://localhost:4000/images/${routePath.toLowerCase()}/${
+                image ? image : "image-placeholder.jpg"
+              }`}
+              width="100px"
+              height="100px"
+            />
           </Typography>
         </TableCell>
         <TableCell>
@@ -50,8 +56,8 @@ export default function FavoritesTableRow({ props, routePath }) {
 
         <TableCell>
           <Typography color="textSecondary" variant="h6">
-            {trimSentence(description, 50) ||
-              "No description included in this record"}
+            {/* {trimSentence(description, 50) ||
+              "No description included in this record"} */}
           </Typography>
         </TableCell>
         <TableCell align="left">

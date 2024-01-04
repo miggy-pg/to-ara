@@ -1,53 +1,55 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Navigate, useNavigate, useParams } from "react-router";
+import { useParams } from "react-router";
 
-import {
-  Typography,
-  Card,
-  Tooltip,
-  CardMedia,
-  Container,
-  Box,
-  Grid,
-  IconButton,
-  useMediaQuery,
-  FormControlLabel,
-  Checkbox,
-} from "@mui/material";
-import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
-import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import ArrowBackTwoToneIcon from "@mui/icons-material/ArrowBackTwoTone";
+import { Typography, Container, Box, Grid, useMediaQuery } from "@mui/material";
 import ChairAltIcon from "@mui/icons-material/ChairAlt";
 import PlaceIcon from "@mui/icons-material/Place";
 import DirectionsBusIcon from "@mui/icons-material/DirectionsBus";
-import { styled } from "@mui/material/styles";
 
 import CustomMenu from "../../../Common/CustomMenu";
 import MapLocator from "../../../Common/MapLocator";
 import useLocalStorageState from "../../../../hooks/useLocalStorageState";
 import { getAccommodation } from "../../../../api/accommodation";
 
-import "./styles.css";
-import "react-multi-carousel/lib/styles.css";
+import BackButton from "../../../Common/Buttons/BackButton";
+import AddFavoriteIcon from "../../../Common/Icons/AddFavoriteIcon";
+import DeleteFavoriteIcon from "../../../Common/Icons/DeleteFavoriteIcon";
+import CardCover from "../../../Common/CardCover";
 
-const CardCover = styled(Card)(
-  ({ theme }) => `
-    position: relative;
-    .MuiCardMedia-root {
-      height: ${theme.spacing(46)};
-    }
-`
-);
+import "react-multi-carousel/lib/styles.css";
+import "./styles.css";
+
+const amenitiesStyle = {
+  backgroundColor: "#689597",
+  color: "#fff",
+  display: "inline-block",
+  padding: "0.3rem",
+  fontSize: "0.8rem",
+  borderRadius: "0.3rem",
+  marginRight: "0.5rem",
+};
+
+function StatusType(type) {
+  return {
+    backgroundColor: `${type ? "#689597" : "#714343"}`,
+    color: "#fff",
+    display: "inline-block",
+    padding: "0.3rem",
+    fontSize: "0.8rem",
+    borderRadius: "0.3rem",
+    marginRight: "0.5rem",
+    mb: 2,
+  };
+}
 
 export default function AccommodationDetail() {
+  const { id } = useParams();
+
   const { isAuth } = useSelector((state) => state.auth);
 
   const [accommodation, setAccommodation] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-
-  const { id } = useParams();
-  const navigate = useNavigate();
 
   const [favorite, setFavorite] = useLocalStorageState(
     [],
@@ -60,34 +62,6 @@ export default function AccommodationDetail() {
 
   const [isSidebarOpen] = useState(true);
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
-
-  const handleDeleteFavorite = (id) => {
-    !isAuth && <Navigate to="user/login" />;
-
-    isAuth &&
-      setFavorite((favoriteAccomodation) =>
-        favoriteAccomodation.filter(
-          (attr) => parseInt(attr.id) !== parseInt(id)
-        )
-      );
-  };
-
-  const handleAddFavorite = (accomodation) => {
-    setFavorite((curAccomodation) => [...curAccomodation, accomodation]);
-  };
-
-  const handleAdd = () => {
-    !isAuth && navigate("/user/login");
-
-    const newFavorite = {
-      image: accommodation.image,
-      name: accommodation.name,
-      description: accommodation.description,
-      id: id,
-    };
-
-    isAuth && !isFavorite && handleAddFavorite(newFavorite);
-  };
 
   useEffect(() => {
     async function getAPIAccomodation() {
@@ -120,34 +94,11 @@ export default function AccommodationDetail() {
       <Grid container spacing={2}>
         <Grid item xs={0.7}>
           <Box display="flex" alignItems="center">
-            <Tooltip arrow placement="top" title="Go back">
-              <IconButton
-                onClick={(e) => {
-                  e.preventDefault();
-                  navigate(-1);
-                }}
-                color="primary"
-                sx={{ p: 2 }}
-              >
-                <ArrowBackTwoToneIcon />
-              </IconButton>
-            </Tooltip>
+            <BackButton />
           </Box>
         </Grid>
         <Grid item xs={8}>
-          <CardCover>
-            <CardMedia
-              image={
-                accommodation?.image
-                  ? `http://localhost:4000/images/accommodations/${accommodation?.image}`
-                  : "http://localhost:4000/images/accommodations/image-placeholder.jpg"
-              }
-              sx={{
-                width: "100%",
-                height: "100%",
-              }}
-            />
-          </CardCover>
+          <CardCover record={accommodation} recordPath="accommodations" />
           <Box
             sx={{
               display: "flex",
@@ -159,36 +110,12 @@ export default function AccommodationDetail() {
             }}
           >
             {accommodation.status == "Available" ? (
-              <Typography
-                sx={{
-                  backgroundColor: "#689597",
-                  color: "#fff",
-                  display: "inline-block",
-                  padding: "0.3rem",
-                  fontSize: "0.8rem",
-                  borderRadius: "0.3rem",
-                  marginRight: "0.5rem",
-                  mb: 2,
-                }}
-                variant="h5"
-              >
-                {accommodation?.status || "Available"}
+              <Typography sx={StatusType(true)} variant="h5">
+                Available
               </Typography>
             ) : (
-              <Typography
-                sx={{
-                  backgroundColor: "#714343",
-                  color: "#fff",
-                  display: "inline-block",
-                  padding: "0.3rem",
-                  fontSize: "0.8rem",
-                  borderRadius: "0.3rem",
-                  marginRight: "0.5rem",
-                  mb: 2,
-                }}
-                variant="h5"
-              >
-                {accommodation?.status || "Unavailable"}
+              <Typography sx={StatusType(false)} variant="h5">
+                Unavailable
               </Typography>
             )}
 
@@ -199,28 +126,19 @@ export default function AccommodationDetail() {
               }}
             >
               {isFavorite ? (
-                <FormControlLabel
-                  onClick={() => handleDeleteFavorite(id)}
-                  control={
-                    <Checkbox
-                      icon={<FavoriteOutlinedIcon />}
-                      checkedIcon={<FavoriteBorderOutlinedIcon />}
-                      checked={isFavorite}
-                      name="checkedH"
-                    />
-                  }
+                <DeleteFavoriteIcon
+                  detailId={id}
+                  isFavorite={isFavorite}
+                  isAuth={isAuth}
+                  setFavorite={setFavorite}
                 />
               ) : (
-                <FormControlLabel
-                  onClick={handleAdd}
-                  control={
-                    <Checkbox
-                      icon={<FavoriteOutlinedIcon />}
-                      checkedIcon={<FavoriteBorderOutlinedIcon />}
-                      checked={false}
-                      name="checkedH"
-                    />
-                  }
+                <AddFavoriteIcon
+                  isAuth={isAuth}
+                  isFavorite={isFavorite}
+                  favorite={accommodation}
+                  setFavorite={setFavorite}
+                  detailId={id}
                 />
               )}
               <Typography sx={{ ml: 0 }} variant="h4" component="div">
@@ -281,23 +199,12 @@ export default function AccommodationDetail() {
             </Box>
 
             <Typography sx={{ ml: 5, width: "50%" }} variant="h5">
-              {(String(accommodation.amenities) !== "null" &&
-                JSON.stringify(accommodation?.amenities)
+              {(String(accommodation?.amenities).length > 0 &&
+                String(accommodation.amenities) !== "null" &&
+                String(accommodation.amenities)
                   .split(",")
                   .map((amenity) => (
-                    <Typography
-                      key={amenity}
-                      variant="h6"
-                      sx={{
-                        backgroundColor: "#689597",
-                        color: "#fff",
-                        display: "inline-block",
-                        padding: "0.3rem",
-                        fontSize: "0.8rem",
-                        borderRadius: "0.3rem",
-                        marginRight: "0.5rem",
-                      }}
-                    >
+                    <Typography key={amenity} variant="h6" sx={amenitiesStyle}>
                       {amenity.replace(/[[\]"]+/g, "")}
                     </Typography>
                   ))) ||
