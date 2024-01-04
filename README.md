@@ -2,7 +2,7 @@
 
 ## About
 
-Welcome to the To-ARA! This web application serves as your go-to platform for exploring the most renowned tourist attractions, accommodations, and festivals within Lanao del Norte. Empowered by modern web technologies, including ReactJS, Node.js, and PostgreSQL, our platform aims to provide a comprehensive and immersive experience for travelers and locals alike.
+Welcome to the To-ARA! This web application serves as your go-to platform for exploring the most renowned tourist attractions, accommodations, and festivals within Lanao del Norte. Empowered by modern web technologies, including ReactJS, Node.js, ExpressJS, and PostgreSQL, our platform aims to provide a comprehensive and immersive experience for travelers and locals alike.
 
 ## Features
 
