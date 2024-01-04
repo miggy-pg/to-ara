@@ -59,28 +59,27 @@ export default function HomePage() {
               height: { xs: "30rem", lg: "24rem" },
             }}
           >
-
-              <Box textAlign="center">
-                <Typography
-                  variant="h1"
-                  color="text.priamry"
-                  fontWeight="normal"
-                  sx={{ my: 1, mb: 4, fontSize: "3rem" }}
-                >
-                  <strong>Tourist System</strong>
-                </Typography>
-              </Box>
-              <Box textAlign="center">
-                <Typography
-                  variant="h4"
-                  color="text.secondary"
-                  fontWeight="normal"
-                  sx={{ my: 1, mb: 4 }}
-                >
-                  They say the world has seven wonders. We say there are more
-                  wonders to look for in <br /> Lanao del Norte and Iligan City!
-                </Typography>
-              </Box>
+            <Box textAlign="center">
+              <Typography
+                variant="h1"
+                color="text.priamry"
+                fontWeight="normal"
+                sx={{ my: 1, mb: 4, fontSize: "4rem" }}
+              >
+                <strong>To-ARA</strong>
+              </Typography>
+            </Box>
+            <Box textAlign="center">
+              <Typography
+                variant="h4"
+                color="text.secondary"
+                fontWeight="normal"
+                sx={{ my: 1, mb: 4 }}
+              >
+                They say the world has seven wonders. We say there are more
+                wonders to look for in <br /> Lanao del Norte and Iligan City!
+              </Typography>
+            </Box>
             <Container maxWidth="xs">
               <Box textAlign="center">
                 <FormControl variant="outlined" fullWidth>
