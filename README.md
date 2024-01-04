@@ -16,11 +16,19 @@ Welcome to the To-ARA! This web application serves as your go-to platform for ex
 
 ## Screenshots
 
+### Home Page
+
 ![Home Page](screenshots/home_page.png)
+
+### Attraction Page
 
 ![Attractions Page](screenshots/attraction_page.png)
 
+### Attraction Details
+
 ![Attractions Details](screenshots/attraction_details.png)
+
+### Browse Map
 
 ![Browse Map](screenshots/browse_map.png)
 
