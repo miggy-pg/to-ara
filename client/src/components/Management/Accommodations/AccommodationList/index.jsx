@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import styled from "styled-components";
+
 import {
   Typography,
   Button,
@@ -9,6 +9,7 @@ import {
   Box,
   Backdrop,
 } from "@mui/material";
+import styled from "styled-components";
 
 import {
   deleteAccommodation,
@@ -82,7 +83,6 @@ export default function AccommodationList({ props }) {
   });
 
   const onChange = (e) => {
-    console.log("e.target.name", e.target.name);
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
@@ -164,7 +164,7 @@ export default function AccommodationList({ props }) {
       console.log(error);
     }
   };
-  console.log("image: ", image);
+
   return (
     <>
       <TableRow>
@@ -251,7 +251,7 @@ export default function AccommodationList({ props }) {
           <StyledTypography color="textSecondary" variant="h6">
             {String(amenities).length > 0 &&
               String(amenities) !== "null" &&
-              JSON.stringify(amenities)
+              String(amenities)
                 .split(",")
                 .map(
                   (amenity) =>

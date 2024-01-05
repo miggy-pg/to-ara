@@ -1,20 +1,17 @@
 import { Link } from "react-router-dom";
 
-import {
-  Button,
-  Card,
-  CardContent,
-  Checkbox,
-  FormControlLabel,
-  Grid,
-  Typography,
-} from "@mui/material";
-import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
+import { Button, Card, CardContent, Grid, Typography } from "@mui/material";
+import AddFavoriteIcon from "../Icons/AddFavoriteIcon";
+
 import { trimSentence } from "../../../utils/trimSentence";
 
-
-export default function CustomCard({ props, favorite, isType, onAddFavorite }) {
+export default function CustomCard({
+  props,
+  favorite,
+  isType,
+  onAddFavorite,
+  children,
+}) {
   const { id: selectedId, image, name, description } = props;
 
   const isFavorite = favorite
@@ -91,7 +88,8 @@ export default function CustomCard({ props, favorite, isType, onAddFavorite }) {
               minHeight: "9rem",
             }}
           >
-            {trimSentence(description, 125) || "No description available for this record."}
+            {trimSentence(description, 125) ||
+              "No description available for this record."}
           </Typography>
           {isType === "accommodations" && (
             <Typography
@@ -121,23 +119,7 @@ export default function CustomCard({ props, favorite, isType, onAddFavorite }) {
                 Read More
               </Button>
             </Link>
-            {!isFavorite && (
-              <FormControlLabel
-                sx={{
-                  mt: "0.9rem",
-                  mr: 0,
-                }}
-                onClick={handleAdd}
-                control={
-                  <Checkbox
-                    icon={<FavoriteOutlinedIcon />}
-                    checked={false}
-                    checkedIcon={<FavoriteBorderOutlinedIcon />}
-                    name="checkedH"
-                  />
-                }
-              />
-            )}
+            {!isFavorite && <AddFavoriteIcon />}
           </Grid>
         </CardContent>
       </Card>

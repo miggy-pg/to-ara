@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+
 import { Box, Container, Grid, useMediaQuery } from "@mui/material";
 
 import CustomMenu from "../../components/Common/CustomMenu";
@@ -20,6 +21,12 @@ export default function Accommodations() {
   const accommodations = useSelector(
     (store) => store.accommodation.accommodations.data
   );
+
+  console.log(
+    "selector: ",
+    useSelector((store) => store.accommodation)
+  );
+
   const searchResults = accommodations;
 
   const [items, setItems] = useState();
@@ -33,7 +40,7 @@ export default function Accommodations() {
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
 
-  // useState for filter attractions
+  // for filter attractions
   const [filterLocation, setFilterLocation] = useState("");
 
   // We are using custom pagination hook
@@ -84,64 +91,62 @@ export default function Accommodations() {
     !e.target.textContent.length && setItems(searchResults);
   };
 
-  
   const handleFilterAccommodations = (e) => {
     e.preventDefault();
-    
-    const priceRange = minPrice?.length > 0 && maxPrice?.length > 0
 
-    try{
-      filterLocation.length > 0 && priceRange &&
+    const priceRange = minPrice?.length > 0 && maxPrice?.length > 0;
+
+    try {
+      filterLocation.length > 0 &&
+        priceRange &&
+        accommodationStatus.length > 0 &&
+        setItems(
+          searchResults
+            .filter((attraction) =>
+              attraction.address
+                ?.toLowerCase()
+                .includes(filterLocation.toLowerCase())
+            )
+            .filter(
+              (attr) =>
+                attr.entrance_fee >= minPrice && attr.entrance_fee <= maxPrice
+            )
+            .filter(
+              (accommodation) => accommodation?.status === accommodationStatus
+            )
+        );
+      !filterLocation &&
+        priceRange &&
+        setItems(
+          searchResults.filter(
+            (attr) => attr.price >= minPrice && attr.price <= maxPrice
+          )
+        );
+
       accommodationStatus.length > 0 &&
-      setItems(
-        searchResults
-          .filter((attraction) =>
-            attraction.address
+        setItems(
+          searchResults.filter(
+            (accommodation) => accommodation?.status === accommodationStatus
+          )
+        );
+
+      filterLocation.length > 0 &&
+        setItems(
+          searchResults.filter((accommodation) =>
+            accommodation.address
               ?.toLowerCase()
               .includes(filterLocation.toLowerCase())
           )
-          .filter(
-            (attr) =>
-              attr.entrance_fee >= minPrice && attr.entrance_fee <= maxPrice
-          )
-          .filter(
-            (accommodation) => accommodation?.status === accommodationStatus
-          )
-      );
-    !filterLocation && priceRange &&
-      setItems(
-        searchResults.filter(
-          (attr) => attr.price >= minPrice && attr.price <= maxPrice
-          )
         );
-          
-    accommodationStatus.length > 0 &&
-      setItems(
-        searchResults.filter(
-          (accommodation) => accommodation?.status === accommodationStatus
-        )
-      );
-
-    filterLocation.length > 0 &&
-      setItems(
-        searchResults.filter((accommodation) =>
-          accommodation.address
-            ?.toLowerCase()
-            .includes(filterLocation.toLowerCase())
-        )
-      );
-    }
-    catch(err){
-      console.log(err)
-    }
-    finally{
+    } catch (err) {
+      console.log(err);
+    } finally {
       setFilterLocation("");
       setAccommodationStatus("");
       setMinPrice("");
       setMaxPrice("");
     }
-
-    };
+  };
 
   useEffect(() => {
     setItems(accommodations);
@@ -158,7 +163,7 @@ export default function Accommodations() {
       }}
     >
       <Container maxWidth="lg">
-        <CustomMenu
+        {/* <CustomMenu
           sx={{
             paddingLeft: isSidebarOpen && lgUp ? "265px" : "",
             backgroundColor: "#ffffff",
@@ -166,7 +171,7 @@ export default function Accommodations() {
           }}
           accommodations={accommodations}
           toggleSidebar={() => setSidebarOpen(!isSidebarOpen)}
-        />
+        /> */}
 
         <Grid container>
           <Grid item xs={12} lg={3}>

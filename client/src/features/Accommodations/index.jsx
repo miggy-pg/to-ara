@@ -40,9 +40,7 @@ const style = {
 };
 
 export default function Accommodations() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(false);
-  const [success, setSuccess] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [amenities, setAmenities] = useState({}); // State to hold selected values
   const [accommodationStatus, setAccommodationStatus] = useState("");
 
@@ -107,11 +105,9 @@ export default function Accommodations() {
       formData.append("direction", values.direction);
       formData.append("amenities", Object.keys(amenities));
 
-      const { data } = await createAccommodation(formData);
+      await createAccommodation(formData);
       dispatch(SUCCESS_CREATE_ACCOMMODATION());
-      setError("");
       setAmenities({});
-      setSuccess(data.message);
       setValues({
         name: "",
         visiting_hours_from: "",
@@ -133,9 +129,6 @@ export default function Accommodations() {
       console.log(error);
       dispatch(FAILED_CREATE_ACCOMMODATION(error.response.data.message));
       handleClose();
-
-      setError(error.response.data.errors[0].msg);
-      setSuccess("");
     }
   };
 
@@ -143,20 +136,23 @@ export default function Accommodations() {
     async function fetchData() {
       try {
         const { data: accommodations } = await getAccommodations();
-        console.log("accommodations", accommodations);
+        setIsLoading(true);
         dispatch(setAccommodations(accommodations));
-        setIsLoading(false);
       } catch (error) {
         console.log(error);
+      } finally {
+        setIsLoading(false);
       }
     }
     fetchData();
   }, [dispatch]);
 
-  const currPageItems =
-    !isLoading && accommodations.slice(indexOfFirstItem, indexOfLastItem);
+  const currPageItems = accommodations?.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
 
-  console.log("currPageItems", currPageItems);
+  if (isLoading) return;
 
   return (
     <>
@@ -183,25 +179,23 @@ export default function Accommodations() {
           >
             <TableHeader data={ACCOMODATION_HEADERS} />
             <TableBody>
-              {!isLoading &&
-                currPageItems.map((user, i) => (
-                  <AccommodationList
-                    key={i}
-                    props={user}
-                    isLoading={isLoading}
-                    handleAccommodationStatus={handleAccommodationStatus}
-                  />
-                ))}
+              {currPageItems?.map((user, i) => (
+                <AccommodationList
+                  key={i}
+                  props={user}
+                  handleAccommodationStatus={handleAccommodationStatus}
+                />
+              ))}
             </TableBody>
           </Table>
           <CustomPagination
-            itemsLength={!isLoading && accommodations.length}
+            itemsLength={accommodations?.length}
             setIndexOfLastItem={setIndexOfLastItem}
             setIndexOfFirstItem={setIndexOfFirstItem}
           />
         </Box>
       </TableContainer>
-      {/* CREATE MODAL FORM */}
+
       <ModalContainer
         handleClose={handleClose}
         Backdrop={Backdrop}

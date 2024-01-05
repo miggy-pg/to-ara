@@ -9,8 +9,8 @@ export default function AddFavorite(props) {
 
   const navigate = useNavigate();
 
-  const handleAddFavorite = (accomodation) => {
-    setFavorite((curAccomodation) => [...curAccomodation, accomodation]);
+  const handleAddFavorite = (item) => {
+    setFavorite((items) => [...items, item]);
   };
 
   const handleAdd = () => {
