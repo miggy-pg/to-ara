@@ -2,7 +2,11 @@ const db = require("../db");
 
 exports.getAttractions = async (req, res) => {
   try {
+<<<<<<< HEAD
     const { rows } = await db.query("SELECT * FROM attraction");
+=======
+    const { rows } = await db.query("SELECT id, name, image, longitude, latitude, address, entrance_fee, LEFT(description, 125) || CASE WHEN LENGTH(description) > 100 THEN '...' ELSE '' END AS description FROM attraction");
+>>>>>>> 886ab8f (fix: page filters)
     return res.status(200).json({ data: rows });
   } catch (err) {
     console.log(err.message);
@@ -23,6 +27,7 @@ exports.getAttraction = async (req, res) => {
       "SELECT * from attraction where id = $1",
       [req.params.id]
     );
+<<<<<<< HEAD
     const { rows: accommodations } = await db.query("SELECT * FROM accommodation");
 
     res.status(200).json({
@@ -30,6 +35,15 @@ exports.getAttraction = async (req, res) => {
       data: {
         currAttraction: getAttraction,
         accommodations: accommodations,
+=======
+    const { rows: attractions } = await db.query("SELECT id, name, image, longitude, latitude, address, entrance_fee, LEFT(description, 125) || CASE WHEN LENGTH(description) > 100 THEN '...' ELSE '' END AS description FROM attraction");
+
+    res.status(200).json({
+      status: "success",
+      data: {
+        currAttraction: getAttraction,
+        attractions: attractions,
+>>>>>>> 886ab8f (fix: page filters)
       },
     });
   } catch (err) {

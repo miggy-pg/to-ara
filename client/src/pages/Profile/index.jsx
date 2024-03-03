@@ -1,7 +1,11 @@
 // @mui material components
 import { Container, Grid, Box, Tabs, Tab, useMediaQuery } from "@mui/material";
 import { useState } from "react";
+<<<<<<< HEAD
 import CustomMenu from "../../components/Common/CustomMenu";
+=======
+import Menu from "../../components/Common/Menu";
+>>>>>>> 886ab8f (fix: page filters)
 import useLocalStorageState from "../../hooks/useLocalStorageState";
 import styled from "styled-components";
 import ProfileUserDetails from "../../components/Management/ProfileUserDetails";
@@ -47,7 +51,11 @@ export default function Profile() {
       }}
     >
       <Container maxWidth="lg">
+<<<<<<< HEAD
         <CustomMenu
+=======
+        <Menu
+>>>>>>> 886ab8f (fix: page filters)
           sx={{
             paddingLeft: isSidebarOpen && lgUp ? "265px" : "",
             backgroundColor: "#ffffff",

@@ -15,18 +15,28 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
 }
 
 // Function to find nearby coordinates within 10km radius
+<<<<<<< HEAD
 export function findNearbyCoordinates(
+=======
+export default function findNearbyCoordinates(
+>>>>>>> 886ab8f (fix: page filters)
   isLoading,
   targetLat,
   targetLon,
   allCoordinates
 ) {
   const nearbyCoordinates = [];
+<<<<<<< HEAD
   console.log("allCoordinates", allCoordinates);
   !isLoading &&
     allCoordinates.forEach((coord) => {
       // Do not include any accommodations that has the same coordinates as the festival
 
+=======
+
+  !isLoading &&
+  allCoordinates.length && allCoordinates.forEach((coord) => {
+>>>>>>> 886ab8f (fix: page filters)
       const distance = calculateDistance(
         targetLat,
         targetLon,

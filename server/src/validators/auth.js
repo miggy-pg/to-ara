@@ -23,7 +23,10 @@ const emailExists = check("email").custom(async (value) => {
       throw new Error("Email is already in use");
     }
   } catch (err) {
+<<<<<<< HEAD
     console.log("err: ", err);
+=======
+>>>>>>> 886ab8f (fix: page filters)
     console.log(err.message);
   }
 });

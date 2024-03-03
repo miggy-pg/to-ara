@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+<<<<<<< HEAD
 
+=======
+import styled from "styled-components";
+>>>>>>> 886ab8f (fix: page filters)
 import {
   Typography,
   Button,
@@ -9,7 +13,10 @@ import {
   Box,
   Backdrop,
 } from "@mui/material";
+<<<<<<< HEAD
 import styled from "styled-components";
+=======
+>>>>>>> 886ab8f (fix: page filters)
 
 import {
   deleteAccommodation,
@@ -44,7 +51,11 @@ const style = {
   p: 4,
 };
 
+<<<<<<< HEAD
 export default function AccommodationList({ props }) {
+=======
+export default function AccomodationList({ props }) {
+>>>>>>> 886ab8f (fix: page filters)
   const {
     id,
     image,
@@ -60,6 +71,13 @@ export default function AccommodationList({ props }) {
     amenities,
   } = props;
 
+<<<<<<< HEAD
+=======
+  // Object.keys(amenities).forEach(
+  //   (key) => !listAmenities.includes(String(key)) && listAmenities.push(key)
+  // );
+
+>>>>>>> 886ab8f (fix: page filters)
   const dispatch = useDispatch();
 
   const [open, setOpen] = useState(false);
@@ -83,6 +101,10 @@ export default function AccommodationList({ props }) {
   });
 
   const onChange = (e) => {
+<<<<<<< HEAD
+=======
+    console.log("e.target.name", e.target.name);
+>>>>>>> 886ab8f (fix: page filters)
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
@@ -164,7 +186,11 @@ export default function AccommodationList({ props }) {
       console.log(error);
     }
   };
+<<<<<<< HEAD
 
+=======
+  
+>>>>>>> 886ab8f (fix: page filters)
   return (
     <>
       <TableRow>
@@ -181,9 +207,13 @@ export default function AccommodationList({ props }) {
         <TableCell>
           <Typography color="textSecondary" variant="h6">
             <img
+<<<<<<< HEAD
               src={`http://localhost:4000/images/accommodations/${
                 image ? image : "image-placeholder.jpg"
               }`}
+=======
+              src={`http://localhost:4000/images/accommodations/${image ? image : "image-placeholder.jpg"}`}
+>>>>>>> 886ab8f (fix: page filters)
               width="100px"
               height="100px"
             />
@@ -223,8 +253,13 @@ export default function AccommodationList({ props }) {
         </TableCell>
         <TableCell>
           <StyledTypography color="textSecondary" variant="h6">
+<<<<<<< HEAD
             <strong>Long:</strong> {longitude} <br />
             <strong>Lan:</strong> {latitude}
+=======
+            {longitude}
+            {latitude}
+>>>>>>> 886ab8f (fix: page filters)
           </StyledTypography>
         </TableCell>
         <TableCell>
@@ -249,9 +284,14 @@ export default function AccommodationList({ props }) {
         </TableCell>
         <TableCell>
           <StyledTypography color="textSecondary" variant="h6">
+<<<<<<< HEAD
             {String(amenities).length > 0 &&
               String(amenities) !== "null" &&
               String(amenities)
+=======
+            {amenities && String(amenities) !== "null" &&
+              JSON.stringify(amenities)
+>>>>>>> 886ab8f (fix: page filters)
                 .split(",")
                 .map(
                   (amenity) =>

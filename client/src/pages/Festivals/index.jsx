@@ -2,9 +2,15 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 
+<<<<<<< HEAD
 import { Box, Container, Grid, useMediaQuery } from "@mui/material";
 
 import Menu from "../../components/Common/CustomMenu";
+=======
+import { Box, Container, Grid, Typography, useMediaQuery } from "@mui/material";
+
+import Menu from "../../components/Common/Menu";
+>>>>>>> 886ab8f (fix: page filters)
 import CustomCard from "../../components/Common/CustomCard";
 import FestivalFilter from "../../components/Management/Festivals/FestivalFilter";
 import useGetFestivals from "../../hooks/useGetFestivals";
@@ -32,11 +38,19 @@ export default function Festivals() {
   // We are using custom pagination hook
   const [indexOfLastItem, setIndexOfLastItem] = useState(null);
   const [indexOfFirstItem, setIndexOfFirstItem] = useState(null);
+<<<<<<< HEAD
   
   const navigate = useNavigate();
   
   const [favorite, setFavorite] = useLocalStorageState([], "favoriteFestivals");
 
+=======
+
+  const [favorite, setFavorite] = useLocalStorageState([], "favoriteFestivals");
+
+  const navigate = useNavigate();
+
+>>>>>>> 886ab8f (fix: page filters)
   // Fetch festivals from our custom hook
   const { isLoading } = useGetFestivals();
 
@@ -66,6 +80,7 @@ export default function Festivals() {
     !e.target.textContent.length && setItems(searchResults);
   };
 
+<<<<<<< HEAD
   const dateRange = fromDateRange?.length > 0 && toDateRange?.length > 0
 
   const handleFilterFestivals = (e) => {
@@ -75,10 +90,52 @@ export default function Festivals() {
       setItems(
         searchResults
           .filter((attraction) =>
+=======
+  const handleFilterFestivals = (e) => {
+    e.preventDefault();
+
+    
+    console.log("fromDateRange")
+
+      if (filterLocation?.length > 0 &&
+        fromDateRange?.length > 0 &&
+        toDateRange?.length > 0 ) {
+          setItems(
+            searchResults
+              .filter((attraction) =>
+                attraction?.address
+                  ?.toLowerCase()
+                  .includes(filterLocation?.toLowerCase())
+              )
+              .filter(
+                (festival) =>
+                  new Date(festival?.festival_date).setHours(0, 0, 0, 0) >=
+                    new Date(String(fromDateRange)).setHours(0, 0, 0, 0) &&
+                  new Date(festival?.festival_date).setHours(0, 0, 0, 0) <=
+                    new Date(String(toDateRange)).setHours(0, 0, 0, 0)
+              )
+          );
+  
+      }else if (fromDateRange?.length > 0 &&
+        toDateRange?.length > 0){
+          setItems(
+            searchResults.filter(
+              (festival) =>
+                new Date(festival.festival_date).setHours(0, 0, 0, 0) >=
+                  new Date(String(fromDateRange)).setHours(0, 0, 0, 0) &&
+                new Date(festival.festival_date).setHours(0, 0, 0, 0) <=
+                  new Date(String(toDateRange)).setHours(0, 0, 0, 0)
+            )
+          );
+      }else{
+        setItems(
+          searchResults.filter((attraction) =>
+>>>>>>> 886ab8f (fix: page filters)
             attraction.address
               ?.toLowerCase()
               .includes(filterLocation.toLowerCase())
           )
+<<<<<<< HEAD
           .filter(
             (festival) =>
               new Date(festival.festival_date).setHours(0, 0, 0, 0) >=
@@ -108,6 +165,12 @@ export default function Festivals() {
         )
       );
   };
+=======
+        );
+      }
+  }
+    
+>>>>>>> 886ab8f (fix: page filters)
 
   useEffect(() => {
     setItems(festivals);
@@ -148,21 +211,48 @@ export default function Festivals() {
             />
           </Grid>
           <Grid item xs={12} lg={9}>
+<<<<<<< HEAD
             <Grid container>
               {!isLoading &&
                 items.map((attraction) => (
                   <CustomCard
                     key={attraction.id}
                     props={attraction}
+=======
+            {!isLoading && <Grid container>
+              {!isLoading &&
+              items?.length ? 
+                items.map((festival) => (
+                  <CustomCard
+                    key={festival.id}
+                    props={festival}
+>>>>>>> 886ab8f (fix: page filters)
                     favorite={favorite}
                     isType="festivals"
                     onAddFavorite={handleAddFavorite}
                   />
+<<<<<<< HEAD
                 ))}
             </Grid>
             <CustomPagination
               itemsLength={
                 !isLoading &&
+=======
+                ))
+              :
+              <Typography
+                    sx={{
+                      fontSize: "28px",
+                      fontWeight: "500",
+                    }}
+                  >
+                    No festival found
+                  </Typography>}
+            </Grid>
+            }
+            {!isLoading && queryFestivals?.length && <CustomPagination
+              itemsLength={
+>>>>>>> 886ab8f (fix: page filters)
                 !queryFestivals.length &&
                 items?.length < festivals?.length
                   ? items?.length < festivals?.length
@@ -172,7 +262,11 @@ export default function Festivals() {
               }
               setIndexOfLastItem={setIndexOfLastItem}
               setIndexOfFirstItem={setIndexOfFirstItem}
+<<<<<<< HEAD
             />
+=======
+            /> || ""}
+>>>>>>> 886ab8f (fix: page filters)
           </Grid>
         </Grid>
       </Container>

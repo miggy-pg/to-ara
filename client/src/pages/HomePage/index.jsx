@@ -13,7 +13,11 @@ import {
   TextField,
 } from "@mui/material";
 
+<<<<<<< HEAD
 import CustomMenu from "../../components/Common/CustomMenu";
+=======
+import Menu from "../../components/Common/Menu";
+>>>>>>> 886ab8f (fix: page filters)
 import "./styles.css";
 
 const MainContent = styled(Box)(
@@ -44,7 +48,11 @@ export default function HomePage() {
       }}
     >
       <Container maxWidth="lg">
+<<<<<<< HEAD
         <CustomMenu
+=======
+        <Menu
+>>>>>>> 886ab8f (fix: page filters)
           sx={{
             paddingLeft: isSidebarOpen && lgUp ? "265px" : "",
             backgroundColor: "#ffffff",
@@ -56,11 +64,16 @@ export default function HomePage() {
           <Container
             maxWidth="md"
             sx={{
+<<<<<<< HEAD
               height: { xs: "30rem", lg: "24rem" },
+=======
+              height: { xs: "22rem", lg: "20rem" },
+>>>>>>> 886ab8f (fix: page filters)
             }}
           >
             <Box textAlign="center">
               <Typography
+<<<<<<< HEAD
                 variant="h1"
                 color="text.priamry"
                 fontWeight="normal"
@@ -71,6 +84,8 @@ export default function HomePage() {
             </Box>
             <Box textAlign="center">
               <Typography
+=======
+>>>>>>> 886ab8f (fix: page filters)
                 variant="h4"
                 color="text.secondary"
                 fontWeight="normal"

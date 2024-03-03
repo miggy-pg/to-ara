@@ -21,7 +21,11 @@ import {
   setUserRole,
 } from "../../../redux/store/authSlice";
 import { onLogin } from "../../../api/auth";
+<<<<<<< HEAD
 import CustomMenu from "../CustomMenu";
+=======
+import Menu from "../Menu";
+>>>>>>> 886ab8f (fix: page filters)
 
 export default function Login() {
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
@@ -50,8 +54,13 @@ export default function Login() {
 
       localStorage.setItem("isAuth", "true");
     } catch (error) {
+<<<<<<< HEAD
       error.response.data.errors.map((err) => dispatch(FAILED_LOGIN_USER(err.msg)));
       
+=======
+      console.log(error.response.data.errors[0].msg);
+      dispatch(FAILED_LOGIN_USER(error.response.data.message));
+>>>>>>> 886ab8f (fix: page filters)
     }
   };
 
@@ -66,7 +75,11 @@ export default function Login() {
       }}
     >
       <Container maxWidth="lg">
+<<<<<<< HEAD
         <CustomMenu
+=======
+        <Menu
+>>>>>>> 886ab8f (fix: page filters)
           sx={{
             paddingLeft: isSidebarOpen && lgUp ? "265px" : "",
             backgroundColor: "#ffffff",
