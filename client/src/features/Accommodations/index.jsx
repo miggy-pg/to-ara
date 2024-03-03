@@ -40,13 +40,9 @@ const style = {
 };
 
 export default function Accommodations() {
-<<<<<<< HEAD
-  const [isLoading, setIsLoading] = useState(false);
-=======
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
->>>>>>> 886ab8f (fix: page filters)
   const [amenities, setAmenities] = useState({}); // State to hold selected values
   const [accommodationStatus, setAccommodationStatus] = useState("");
 
@@ -111,17 +107,11 @@ export default function Accommodations() {
       formData.append("direction", values.direction);
       formData.append("amenities", Object.keys(amenities));
 
-<<<<<<< HEAD
-      await createAccommodation(formData);
-      dispatch(SUCCESS_CREATE_ACCOMMODATION());
-      setAmenities({});
-=======
       const { data } = await createAccommodation(formData);
       dispatch(SUCCESS_CREATE_ACCOMMODATION());
       setError("");
       setAmenities({});
       setSuccess(data.message);
->>>>>>> 886ab8f (fix: page filters)
       setValues({
         name: "",
         visiting_hours_from: "",
@@ -143,12 +133,9 @@ export default function Accommodations() {
       console.log(error);
       dispatch(FAILED_CREATE_ACCOMMODATION(error.response.data.message));
       handleClose();
-<<<<<<< HEAD
-=======
 
       setError(error.response.data.errors[0].msg);
       setSuccess("");
->>>>>>> 886ab8f (fix: page filters)
     }
   };
 
@@ -156,37 +143,18 @@ export default function Accommodations() {
     async function fetchData() {
       try {
         const { data: accommodations } = await getAccommodations();
-<<<<<<< HEAD
-        setIsLoading(true);
-        dispatch(setAccommodations(accommodations));
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setIsLoading(false);
-=======
         dispatch(setAccommodations(accommodations));
         setIsLoading(false);
       } catch (error) {
         console.log(error);
->>>>>>> 886ab8f (fix: page filters)
       }
     }
     fetchData();
   }, [dispatch]);
 
-<<<<<<< HEAD
-  const currPageItems = accommodations?.slice(
-    indexOfFirstItem,
-    indexOfLastItem
-  );
-
-  if (isLoading) return;
-
-=======
   const currPageItems =
     !isLoading && accommodations.slice(indexOfFirstItem, indexOfLastItem);
   
->>>>>>> 886ab8f (fix: page filters)
   return (
     <>
       <Button sx={{ ml: 3 }} onClick={handleOpen} variant="contained">
@@ -212,19 +180,6 @@ export default function Accommodations() {
           >
             <TableHeader data={ACCOMODATION_HEADERS} />
             <TableBody>
-<<<<<<< HEAD
-              {currPageItems?.map((user, i) => (
-                <AccommodationList
-                  key={i}
-                  props={user}
-                  handleAccommodationStatus={handleAccommodationStatus}
-                />
-              ))}
-            </TableBody>
-          </Table>
-          <CustomPagination
-            itemsLength={accommodations?.length}
-=======
               {!isLoading &&
                 currPageItems.map((user, i) => (
                   <AccommodationList
@@ -238,17 +193,12 @@ export default function Accommodations() {
           </Table>
           <CustomPagination
             itemsLength={!isLoading && accommodations.length}
->>>>>>> 886ab8f (fix: page filters)
             setIndexOfLastItem={setIndexOfLastItem}
             setIndexOfFirstItem={setIndexOfFirstItem}
           />
         </Box>
       </TableContainer>
-<<<<<<< HEAD
-
-=======
       {/* CREATE MODAL FORM */}
->>>>>>> 886ab8f (fix: page filters)
       <ModalContainer
         handleClose={handleClose}
         Backdrop={Backdrop}

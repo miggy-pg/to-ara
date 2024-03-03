@@ -2,11 +2,7 @@ const db = require("../db");
 
 exports.getAccommodations = async (req, res) => {
   try {
-<<<<<<< HEAD
-    const { rows } = await db.query("SELECT * FROM accommodation");
-=======
     const { rows } = await db.query("SELECT id, name, image, price, longitude, latitude, amenities, address, status, LEFT(description, 125) || CASE WHEN LENGTH(description) > 100 THEN '...' ELSE '' END AS description FROM accommodation");
->>>>>>> 886ab8f (fix: page filters)
     return res.status(200).json({ data: rows });
   } catch (err) {
     console.log(err.message);
@@ -23,16 +19,6 @@ exports.protected = async (req, res) => {
 
 exports.getAccommodation = async (req, res) => {
   try {
-<<<<<<< HEAD
-    const { rows: accommodation } = await db.query(
-      "SELECT * from accommodation where id = $1",
-      [req.params.id]
-    );
-
-    res.status(200).json({
-      status: "succes",
-      accommodation: accommodation,
-=======
     const { rows: currAccomodation } = await db.query(
       "SELECT * from accommodation where id = $1",
       [req.params.id]
@@ -47,7 +33,6 @@ exports.getAccommodation = async (req, res) => {
         currAccomodation: currAccomodation,
         accomodations: accomodations,
       },
->>>>>>> 886ab8f (fix: page filters)
     });
   } catch (err) {
     console.log(err);
@@ -67,11 +52,6 @@ exports.createAccommodation = async (req, res) => {
     direction,
     amenities,
   } = req.body;
-<<<<<<< HEAD
-
-  console.log(req.file);
-=======
->>>>>>> 886ab8f (fix: page filters)
   try {
     const { rows } = await db.query(
       `
@@ -88,11 +68,7 @@ exports.createAccommodation = async (req, res) => {
         status,
         description,
         direction,
-<<<<<<< HEAD
-        [amenities],
-=======
         JSON.stringify(amenities),
->>>>>>> 886ab8f (fix: page filters)
         req.file?.filename,
       ]
     );

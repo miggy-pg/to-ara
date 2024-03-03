@@ -3,16 +3,6 @@ import { useSearchParams } from "react-router-dom";
 
 import { Pagination } from "@mui/material";
 
-<<<<<<< HEAD
-const ITEMS_PAGE_SIZE = 9;
-
-export default function CustomPagination({
-  itemsLength,
-  setIndexOfLastItem,
-  setIndexOfFirstItem,
-  itemPageSize = ITEMS_PAGE_SIZE,
-}) {
-=======
 const ITEMS_PAGE_SIZE = 9
 
 export default function CustomPagination({
@@ -22,7 +12,6 @@ export default function CustomPagination({
   itemPageSize = ITEMS_PAGE_SIZE,
 })
 {
->>>>>>> 886ab8f (fix: page filters)
   const [page, setPage] = useState(1);
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = !searchParams.get("page")

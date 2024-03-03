@@ -42,13 +42,8 @@ export default function AccommodationFilter({
         InputProps={{
           endAdornment: (
             <InputAdornment>
-<<<<<<< HEAD
-              <IconButton onClick={handleOnClickSearch}>
-                <SearchIcon/>
-=======
               <IconButton>
                 <SearchIcon onClick={handleOnClickSearch} />
->>>>>>> 886ab8f (fix: page filters)
               </IconButton>
             </InputAdornment>
           ),
@@ -138,12 +133,6 @@ export default function AccommodationFilter({
               value={minPrice}
               onChange={(e) => setMinPrice(e.target.value)}
               sx={{ height: "20%", width: "100%", fontSize: "10px" }}
-<<<<<<< HEAD
-              InputProps={{
-              inputProps: { min: 0 }
-            }}
-=======
->>>>>>> 886ab8f (fix: page filters)
             />
           </Grid>
           <Grid item xs={6}>
@@ -153,12 +142,6 @@ export default function AccommodationFilter({
               value={maxPrice}
               onChange={(e) => setMaxPrice(e.target.value)}
               sx={{ height: "20%", width: "100%", fontSize: "10px" }}
-<<<<<<< HEAD
-              InputProps={{
-                inputProps: { min: 0 }
-              }}
-=======
->>>>>>> 886ab8f (fix: page filters)
             />
           </Grid>
         </Grid>

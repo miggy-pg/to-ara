@@ -13,11 +13,7 @@ import {
 } from "@mui/material";
 import { onRegistration } from "../../../api/auth";
 import { Link } from "react-router-dom";
-<<<<<<< HEAD
-import CustomMenu from "../CustomMenu";
-=======
 import Menu from "../Menu";
->>>>>>> 886ab8f (fix: page filters)
 import { useDispatch } from "react-redux";
 import {
   FAILED_CREATE_USER,
@@ -52,12 +48,8 @@ export default function Register() {
       setValues({ name: "", email: "", password: "" });
     } catch (error) {
       console.log(error);
-<<<<<<< HEAD
-      error.response.data.errors.map((err) => dispatch(FAILED_CREATE_USER(err.msg)));
-=======
       dispatch(FAILED_CREATE_USER(error.response.data.message));
       // setError(error.response.data.errors[0].msg);
->>>>>>> 886ab8f (fix: page filters)
       setSuccess("");
     }
   };
@@ -73,11 +65,7 @@ export default function Register() {
       }}
     >
       <Container maxWidth="lg">
-<<<<<<< HEAD
-        <CustomMenu
-=======
         <Menu
->>>>>>> 886ab8f (fix: page filters)
           sx={{
             paddingLeft: isSidebarOpen && lgUp ? "265px" : "",
             backgroundColor: "#ffffff",

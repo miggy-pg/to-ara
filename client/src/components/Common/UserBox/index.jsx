@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-
-=======
->>>>>>> 886ab8f (fix: page filters)
 import {
   Box,
   Menu,
@@ -17,11 +11,8 @@ import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 
 import useProtectedInfo from "../../../hooks/useProtectedInfo";
-<<<<<<< HEAD
-=======
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
->>>>>>> 886ab8f (fix: page filters)
 
 export default function UserBox({
   handleOnClickProfileMenu,

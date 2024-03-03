@@ -1,23 +1,5 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-<<<<<<< HEAD
-import { useParams } from "react-router";
-
-import { Typography, Container, Box, Grid, useMediaQuery } from "@mui/material";
-import DirectionsBusIcon from "@mui/icons-material/DirectionsBus";
-import PlaceIcon from "@mui/icons-material/Place";
-
-import AddFavoriteIcon from "../../../Common/Icons/AddFavoriteIcon";
-import CustomMenu from "../../../Common/CustomMenu";
-import DeleteFavoriteIcon from "../../../Common/Icons/DeleteFavoriteIcon";
-import MapLocator from "../../../Common/MapLocator";
-import useLocalStorageState from "../../../../hooks/useLocalStorageState";
-import CardCover from "../../../Common/CardCover";
-import BackButton from "../../../Common/Buttons/BackButton";
-import Recommendation from "../../../Common/Recommedation";
-import { findNearbyCoordinates } from "../../../../utils/findNearbyCoordinates";
-import { convertTo12HourFormat } from "../../../../utils/formatTime";
-=======
 import { Navigate, useNavigate, useParams } from "react-router";
 import { Link } from "react-router-dom";
 
@@ -49,13 +31,10 @@ import Menu from "../../../Common/Menu";
 import MapLocator from "../../../Common/MapLocator";
 import useLocalStorageState from "../../../../hooks/useLocalStorageState";
 import findNearbyCoordinates from "../../../../utils/findNearbyCoordinates";
->>>>>>> 886ab8f (fix: page filters)
 import { getAttraction } from "../../../../api/attraction";
 
 import "./styles.css";
 import "react-multi-carousel/lib/styles.css";
-<<<<<<< HEAD
-=======
 import { convertTo12HourFormat } from "../../../../utils/formatTime";
 import { getAccommodations } from "../../../../api/accommodation";
 
@@ -67,7 +46,6 @@ const CardCover = styled(Card)(
     }
 `
 );
->>>>>>> 886ab8f (fix: page filters)
 
 const responsive = {
   desktop: {
@@ -88,16 +66,6 @@ const responsive = {
 };
 
 export default function AttractionDetail() {
-<<<<<<< HEAD
-  const { id } = useParams();
-
-  const { isAuth } = useSelector((state) => state.auth);
-
-  const [accommodations, setAccommodations] = useState({});
-  const [currAttraction, setCurrAttraction] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
-
-=======
   const { isAuth } = useSelector((state) => state.auth);
 
   const [accommodations, setAccommodations] = useState({})
@@ -108,7 +76,6 @@ export default function AttractionDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
 
->>>>>>> 886ab8f (fix: page filters)
   const [favorite, setFavorite] = useLocalStorageState(
     [],
     "favoriteAttractions"
@@ -121,8 +88,6 @@ export default function AttractionDetail() {
   const [isSidebarOpen] = useState(true);
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
 
-<<<<<<< HEAD
-=======
   const handleDeleteFavorite = (id) => {
     !isAuth && <Navigate to="user/login" />;
 
@@ -148,16 +113,11 @@ export default function AttractionDetail() {
     isAuth && !isFavorite && handleAddFavorite(newAddedFavorite);
   };
 
->>>>>>> 886ab8f (fix: page filters)
   useEffect(() => {
     async function getAPIAttraction() {
       try {
         const { data: currAttraction, isLoading } = await getAttraction(id);
-<<<<<<< HEAD
-        setAccommodations(currAttraction?.data?.accommodations);
-=======
         setAttractions(currAttraction?.data?.attractions);
->>>>>>> 886ab8f (fix: page filters)
         setCurrAttraction(currAttraction?.data?.currAttraction?.[0]);
         setIsLoading(isLoading);
       } catch (error) {
@@ -167,9 +127,6 @@ export default function AttractionDetail() {
     getAPIAttraction();
   }, []);
 
-<<<<<<< HEAD
-  if (isLoading) return;
-=======
   
   useEffect(() => {
     async function fetchAccommodations() {
@@ -179,33 +136,22 @@ export default function AttractionDetail() {
     }
     fetchAccommodations()
   },[])
->>>>>>> 886ab8f (fix: page filters)
 
   const nearby = findNearbyCoordinates(
     isLoading,
     currAttraction.latitude,
     currAttraction.longitude,
-<<<<<<< HEAD
-    accommodations
-  );
-
-=======
     !isLoading && accommodations
   );
 
     
 
->>>>>>> 886ab8f (fix: page filters)
   return (
     <Container
       sx={{ mt: 15, pb: 6, boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.1)" }}
       maxWidth="lg"
     >
-<<<<<<< HEAD
-      <CustomMenu
-=======
       <Menu
->>>>>>> 886ab8f (fix: page filters)
         sx={{
           paddingLeft: isSidebarOpen && lgUp ? "265px" : "",
           backgroundColor: "#ffffff",
@@ -216,14 +162,6 @@ export default function AttractionDetail() {
       <Grid container spacing={2}>
         <Grid item xs={0.7}>
           <Box display="flex" alignItems="center">
-<<<<<<< HEAD
-            <BackButton />
-          </Box>
-        </Grid>
-        <Grid item xs={8}>
-          <CardCover record={currAttraction} recordPath="attractions" />
-
-=======
             <Tooltip arrow placement="top" title="Go back">
               <IconButton
                 onClick={(e) => {
@@ -252,7 +190,6 @@ export default function AttractionDetail() {
               }}
             />
           </CardCover>
->>>>>>> 886ab8f (fix: page filters)
           <Box
             sx={{
               display: "flex",
@@ -270,21 +207,6 @@ export default function AttractionDetail() {
               }}
             >
               {isFavorite ? (
-<<<<<<< HEAD
-                <DeleteFavoriteIcon
-                  detailId={id}
-                  isFavorite={isFavorite}
-                  isAuth={isAuth}
-                  setFavorite={setFavorite}
-                />
-              ) : (
-                <AddFavoriteIcon
-                  isAuth={isAuth}
-                  isFavorite={isFavorite}
-                  favorite={currAttraction}
-                  setFavorite={setFavorite}
-                  detailId={id}
-=======
                 <FormControlLabel
                   onClick={() => handleDeleteFavorite(id)}
                   control={
@@ -307,7 +229,6 @@ export default function AttractionDetail() {
                       name="checkedH"
                     />
                   }
->>>>>>> 886ab8f (fix: page filters)
                 />
               )}
               <Typography sx={{ ml: 0 }} variant="h4" component="div">
@@ -361,15 +282,6 @@ export default function AttractionDetail() {
           </Box>
         </Grid>
 
-<<<<<<< HEAD
-        <MapLocator
-          latitude={currAttraction.latitude}
-          longitude={currAttraction.longitude}
-          name={currAttraction.name}
-        />
-
-        <Recommendation nearby={nearby} responsive={responsive} />
-=======
         {/* MAP LOCATION */}
         <Grid item xs={3}>
           <Box display="flex" alignItems="center">
@@ -466,7 +378,6 @@ export default function AttractionDetail() {
             </Box>
           )}
         </Grid>
->>>>>>> 886ab8f (fix: page filters)
       </Grid>
     </Container>
   );

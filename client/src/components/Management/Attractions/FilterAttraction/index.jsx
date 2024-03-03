@@ -39,13 +39,8 @@ export default function FilterAttraction({
         InputProps={{
           endAdornment: (
             <InputAdornment>
-<<<<<<< HEAD
-              <IconButton onClick={handleOnClickSearch} >
-                <SearchIcon/>
-=======
               <IconButton>
                 <SearchIcon onClick={handleOnClickSearch} />
->>>>>>> 886ab8f (fix: page filters)
               </IconButton>
             </InputAdornment>
           ),
@@ -115,12 +110,6 @@ export default function FilterAttraction({
               value={minFee}
               onChange={(e) => setMinFee(e.target.value)}
               sx={{ height: "20%", width: "100%", fontSize: "10px" }}
-<<<<<<< HEAD
-              InputProps={{
-                inputProps: { min: 0 }
-              }}
-=======
->>>>>>> 886ab8f (fix: page filters)
             />
           </Grid>
           <Grid item xs={6}>
@@ -130,12 +119,6 @@ export default function FilterAttraction({
               value={maxFee}
               onChange={(e) => setMaxFee(e.target.value)}
               sx={{ height: "20%", width: "100%", fontSize: "10px" }}
-<<<<<<< HEAD
-              InputProps={{
-                inputProps: { min: 0 }
-              }}
-=======
->>>>>>> 886ab8f (fix: page filters)
             />
           </Grid>
         </Grid>

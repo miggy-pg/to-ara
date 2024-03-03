@@ -35,13 +35,8 @@ exports.registerUsers = async (req, res) => {
       .status(201)
       .json({ success: true, message: "User registered successfully" });
   } catch (err) {
-<<<<<<< HEAD
-    console.log("error: ", err.message);
-    return res.status(500).json({ message: err.response.data.message });
-=======
     console.log(err.message);
     return res.status(500).json({ message: err.message });
->>>>>>> 886ab8f (fix: page filters)
   }
 };
 
@@ -62,11 +57,7 @@ exports.loginUsers = async (req, res) => {
     });
   } catch (err) {
     console.log(err.message);
-<<<<<<< HEAD
-    return res.status(500).json({ error: err.response.data.message });
-=======
     return res.status(500).json({ error: err.message });
->>>>>>> 886ab8f (fix: page filters)
   }
 };
 
@@ -78,12 +69,7 @@ exports.logoutUsers = async (req, res) => {
       .clearCookie("token ", { httpOnly: true })
       .json({ sucess: true, message: "Logged out successfully" });
   } catch (err) {
-<<<<<<< HEAD
-    console.log("message:", err.message);
-    return res.status(500).json({ error: err.response.data.message });
-=======
     console.log(err.message);
     return res.status(500).json({ error: err.message });
->>>>>>> 886ab8f (fix: page filters)
   }
 };

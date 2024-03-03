@@ -2,11 +2,7 @@ const db = require("../db");
 
 exports.getFestivals = async (req, res) => {
   try {
-<<<<<<< HEAD
-    const { rows } = await db.query("SELECT * FROM festival");
-=======
     const { rows } = await db.query("SELECT id, name, image, longitude, latitude, address, festival_date, LEFT(description, 125) || CASE WHEN LENGTH(description) > 100 THEN '...' ELSE '' END AS description FROM festival");
->>>>>>> 886ab8f (fix: page filters)
     return res.status(200).json({ data: rows });
   } catch (err) {
     console.log(err.message);
@@ -27,21 +23,13 @@ exports.getFestival = async (req, res) => {
       "SELECT * from festival where id = $1",
       [req.params.id]
     );
-<<<<<<< HEAD
-    const { rows: accommodations } = await db.query("SELECT * FROM accommodation");
-=======
     const { rows: festivals } = await db.query("SELECT id, name, image, longitude, latitude, address, festival_date, LEFT(description, 125) || CASE WHEN LENGTH(description) > 100 THEN '...' ELSE '' END AS description FROM festival");
->>>>>>> 886ab8f (fix: page filters)
 
     res.status(200).json({
       status: "succes",
       data: {
         currFestival: currFestival,
-<<<<<<< HEAD
-        accommodations: accommodations,
-=======
         festivals: festivals,
->>>>>>> 886ab8f (fix: page filters)
       },
     });
   } catch (err) {

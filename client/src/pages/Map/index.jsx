@@ -4,11 +4,7 @@ import { MapContainer } from "react-leaflet/MapContainer";
 import { Marker, Popup } from "react-leaflet";
 import { TileLayer } from "react-leaflet/TileLayer";
 
-<<<<<<< HEAD
-import CustomMenu from "../../components/Common/CustomMenu";
-=======
 import Menu from "../../components/Common/Menu";
->>>>>>> 886ab8f (fix: page filters)
 import "leaflet/dist/leaflet.css";
 import { getAttractions } from "../../api/attraction";
 import useGetAttractions from "../../hooks/useGetAttractions";
@@ -29,11 +25,8 @@ export default function Map() {
   const accommodations = useSelector(
     (store) => store.accommodation.accommodations.data
   );
-<<<<<<< HEAD
-=======
    
  console.log("attractions: ", attractions)
->>>>>>> 886ab8f (fix: page filters)
 
   const [isSidebarOpen, setSidebarOpen] = useState(true);
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
@@ -83,11 +76,7 @@ export default function Map() {
         >
           Browse Map
         </Typography>
-<<<<<<< HEAD
-        <CustomMenu
-=======
         <Menu
->>>>>>> 886ab8f (fix: page filters)
           sx={{
             paddingLeft: isSidebarOpen && lgUp ? "265px" : "",
             backgroundColor: "#ffffff",
@@ -110,51 +99,24 @@ export default function Map() {
           {!isLoading &&
             attractions.map((attraction, index) => (
               <div key={index}>
-<<<<<<< HEAD
-                <Marker position={[attraction.latitude, attraction.longitude]}>
-=======
                 {attraction?.latitude && attraction?.longitude && <Marker position={[attraction?.latitude, attraction?.longitude]}>
->>>>>>> 886ab8f (fix: page filters)
                   <Popup>
                     <Link to={`/attractions/${attraction.id}`}>
                       {attraction.name}
                     </Link>
                   </Popup>
-<<<<<<< HEAD
-                </Marker>
-=======
                 </Marker>}
->>>>>>> 886ab8f (fix: page filters)
               </div>
             ))}
           {!isLoading &&
             festivals.map((festival, index) => (
               <div key={index}>
-<<<<<<< HEAD
-                <Marker position={[festival.latitude, festival.longitude]}>
-=======
                {festival?.latitude && festival?.longitude && <Marker position={[festival?.latitude, festival?.longitude]}>
->>>>>>> 886ab8f (fix: page filters)
                   <Popup>
                     <Link to={`/festivals/${festival.id}`}>
                       {festival.name}
                     </Link>
                   </Popup>
-<<<<<<< HEAD
-                </Marker>
-              </div>
-            ))}
-          {!isLoading &&
-            accommodations.map((festival, index) => (
-              <div key={index}>
-                <Marker position={[festival.latitude, festival.longitude]}>
-                  <Popup>
-                    <Link to={`/accommodations/${festival.id}`}>
-                      {festival.name}
-                    </Link>
-                  </Popup>
-                </Marker>
-=======
                 </Marker>}
               </div>
             ))}
@@ -168,7 +130,6 @@ export default function Map() {
                     </Link>
                   </Popup>
                 </Marker>}
->>>>>>> 886ab8f (fix: page filters)
               </div>
             ))}
         </MapContainer>

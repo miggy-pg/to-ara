@@ -201,13 +201,8 @@ export default function AttractionList({ props }) {
         </TableCell>
         <TableCell>
           <StyledTypography color="textSecondary" variant="h6">
-<<<<<<< HEAD
-            <strong>Long:</strong> {longitude} <br/>
-            <strong>Lan:</strong> {latitude}
-=======
             {longitude}
             {latitude}
->>>>>>> 886ab8f (fix: page filters)
           </StyledTypography>
         </TableCell>
         <TableCell>

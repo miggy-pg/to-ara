@@ -1,26 +1,5 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-<<<<<<< HEAD
-import { useParams } from "react-router";
-
-import { Typography, Container, Box, Grid, useMediaQuery } from "@mui/material";
-import PlaceIcon from "@mui/icons-material/Place";
-
-import AddFavoriteIcon from "../../../Common/Icons/AddFavoriteIcon";
-import BackButton from "../../../Common/Buttons/BackButton";
-import CardCover from "../../../Common/CardCover";
-import CustomMenu from "../../../Common/CustomMenu";
-import DeleteFavoriteIcon from "../../../Common/Icons/DeleteFavoriteIcon";
-import MapLocator from "../../../Common/MapLocator";
-import Recommendation from "../../../Common/Recommedation";
-import useLocalStorageState from "../../../../hooks/useLocalStorageState";
-import { getFestival } from "../../../../api/festival";
-import { findNearbyCoordinates } from "../../../../utils/findNearbyCoordinates";
-import { formatLongDate } from "../../../../utils/formatDate";
-
-import "react-multi-carousel/lib/styles.css";
-import "./styles.css";
-=======
 import { Navigate, useNavigate, useParams } from "react-router";
 import { Link } from "react-router-dom";
 
@@ -67,7 +46,6 @@ const CardCover = styled(Card)(
     }
 `
 );
->>>>>>> 886ab8f (fix: page filters)
 
 const responsive = {
   desktop: {
@@ -88,15 +66,6 @@ const responsive = {
 };
 
 export default function FestivalDetail() {
-<<<<<<< HEAD
-  const { id } = useParams();
-  const { isAuth } = useSelector((state) => state.auth);
-
-  const [accommodations, setAccommodations] = useState({});
-  const [currFestival, setCurrFestival] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
-
-=======
   const { isAuth } = useSelector((state) => state.auth);
 
   const [accommodations, setAccommodations] = useState({})
@@ -107,7 +76,6 @@ export default function FestivalDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
 
->>>>>>> 886ab8f (fix: page filters)
   const [favorite, setFavorite] = useLocalStorageState([], "favoriteFestivals");
 
   const isFavorite = favorite
@@ -117,8 +85,6 @@ export default function FestivalDetail() {
   const [isSidebarOpen] = useState(true);
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
 
-<<<<<<< HEAD
-=======
   const handleDeleteFavorite = (id) => {
     !isAuth && <Navigate to="user/login" />;
 
@@ -144,16 +110,11 @@ export default function FestivalDetail() {
     isAuth && !isFavorite && handleAddFavorite(newAddedFavorite);
   };
 
->>>>>>> 886ab8f (fix: page filters)
   useEffect(() => {
     async function getAPIFestival() {
       try {
         const { data: currFestival, isLoading } = await getFestival(id);
-<<<<<<< HEAD
-        setAccommodations(currFestival?.data?.accommodations);
-=======
         setFestivals(currFestival?.data?.festivals);
->>>>>>> 886ab8f (fix: page filters)
         setCurrFestival(currFestival?.data?.currFestival?.[0]);
         setIsLoading(isLoading);
       } catch (error) {
@@ -162,10 +123,6 @@ export default function FestivalDetail() {
     }
     getAPIFestival();
   }, []);
-<<<<<<< HEAD
-
-  if (isLoading) return;
-=======
   
   useEffect(() => {
     async function fetchAccommodations() {
@@ -175,17 +132,12 @@ export default function FestivalDetail() {
     }
     fetchAccommodations()
   },[])
->>>>>>> 886ab8f (fix: page filters)
 
   const nearby = findNearbyCoordinates(
     isLoading,
     currFestival.latitude,
     currFestival.longitude,
-<<<<<<< HEAD
-    accommodations
-=======
     !isLoading && accommodations
->>>>>>> 886ab8f (fix: page filters)
   );
 
   return (
@@ -193,11 +145,7 @@ export default function FestivalDetail() {
       sx={{ mt: 15, pb: 6, boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.1)" }}
       maxWidth="lg"
     >
-<<<<<<< HEAD
-      <CustomMenu
-=======
       <Menu
->>>>>>> 886ab8f (fix: page filters)
         sx={{
           paddingLeft: isSidebarOpen && lgUp ? "265px" : "",
           backgroundColor: "#ffffff",
@@ -208,14 +156,6 @@ export default function FestivalDetail() {
       <Grid container spacing={2}>
         <Grid item xs={0.7}>
           <Box display="flex" alignItems="center">
-<<<<<<< HEAD
-            <BackButton />
-          </Box>
-        </Grid>
-        <Grid item xs={8}>
-          <CardCover record={currFestival} recordPath="festivals" />
-
-=======
             <Tooltip arrow placement="top" title="Go back">
               <IconButton
                 onClick={(e) => {
@@ -244,7 +184,6 @@ export default function FestivalDetail() {
               }}
             />
           </CardCover>
->>>>>>> 886ab8f (fix: page filters)
           <Box
             sx={{
               display: "flex",
@@ -262,25 +201,6 @@ export default function FestivalDetail() {
               }}
             >
               {isFavorite ? (
-<<<<<<< HEAD
-                <DeleteFavoriteIcon
-                  detailId={id}
-                  isFavorite={isFavorite}
-                  isAuth={isAuth}
-                  setFavorite={setFavorite}
-                />
-              ) : (
-                <AddFavoriteIcon
-                  isAuth={isAuth}
-                  isFavorite={isFavorite}
-                  favorite={currFestival}
-                  setFavorite={setFavorite}
-                  detailId={id}
-                />
-              )}
-              <Typography sx={{ ml: 0 }} variant="h4" component="div">
-                <h1>{currFestival?.name}</h1>
-=======
                 <FormControlLabel
                   onClick={() => handleDeleteFavorite(id)}
                   control={
@@ -307,7 +227,6 @@ export default function FestivalDetail() {
               )}
               <Typography sx={{ ml: 0 }} variant="h4" component="div">
                 <h1>{currFestival.name}</h1>
->>>>>>> 886ab8f (fix: page filters)
               </Typography>
             </Box>
             <Typography variant="h4" sx={{ mb: "1rem" }} color="text.primary">
@@ -335,15 +254,6 @@ export default function FestivalDetail() {
           </Box>
         </Grid>
 
-<<<<<<< HEAD
-        <MapLocator
-          latitude={currFestival?.latitude}
-          longitude={currFestival?.longitude}
-          name={currFestival?.name}
-        />
-
-        <Recommendation nearby={nearby} responsive={responsive} />
-=======
         {/* MAP LOCATION */}
         <Grid item xs={3}>
           <Box display="flex" alignItems="center">
@@ -440,7 +350,6 @@ export default function FestivalDetail() {
             </Box>
           )}
         </Grid>
->>>>>>> 886ab8f (fix: page filters)
       </Grid>
     </Container>
   );

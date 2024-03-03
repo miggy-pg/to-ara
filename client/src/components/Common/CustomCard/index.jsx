@@ -1,19 +1,5 @@
 import { Link } from "react-router-dom";
 
-<<<<<<< HEAD
-import { Button, Card, CardContent, Grid, Typography } from "@mui/material";
-import AddFavoriteIcon from "../Icons/AddFavoriteIcon";
-
-import { trimSentence } from "../../../utils/trimSentence";
-
-export default function CustomCard({
-  props,
-  favorite,
-  isType,
-  onAddFavorite,
-  children,
-}) {
-=======
 import {
   Button,
   Card,
@@ -27,7 +13,6 @@ import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlin
 import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
 
 export default function CustomCard({ props, favorite, isType, onAddFavorite }) {
->>>>>>> 886ab8f (fix: page filters)
   const { id: selectedId, image, name, description } = props;
 
   const isFavorite = favorite
@@ -104,12 +89,7 @@ export default function CustomCard({ props, favorite, isType, onAddFavorite }) {
               minHeight: "9rem",
             }}
           >
-<<<<<<< HEAD
-            {trimSentence(description, 125) ||
-              "No description available for this record."}
-=======
             {description || "No description available for this record."}
->>>>>>> 886ab8f (fix: page filters)
           </Typography>
           {isType === "accommodations" && (
             <Typography
@@ -139,9 +119,6 @@ export default function CustomCard({ props, favorite, isType, onAddFavorite }) {
                 Read More
               </Button>
             </Link>
-<<<<<<< HEAD
-            {!isFavorite && <AddFavoriteIcon />}
-=======
             {!isFavorite && (
               <FormControlLabel
                 sx={{
@@ -159,7 +136,6 @@ export default function CustomCard({ props, favorite, isType, onAddFavorite }) {
                 }
               />
             )}
->>>>>>> 886ab8f (fix: page filters)
           </Grid>
         </CardContent>
       </Card>
