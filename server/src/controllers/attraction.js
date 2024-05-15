@@ -150,3 +150,33 @@ exports.deleteAttraction = async (req, res) => {
     console.log(err);
   }
 };
+
+exports.addToFavorite = async(req, res) => {
+  const {id} = req.body
+
+  try {
+    await db.query("UPDATE attraction SET is_favorite = true WHERE id = $1", [id])
+  }
+  catch(err){
+    console.log(err)
+  }
+}
+
+exports.removeFromFavorite = async(req, res) => {
+  const {id} = req.body
+  try {
+    await db.query("UPDATE attraction SET is_favorite = false WHERE id = $1", [id])
+  }
+  catch(err){
+    console.log(err)
+  }
+}
+
+exports.getAttractionFavorites = async(req, res) => {
+  try{
+    const {rows} = await db.query("SELECT id, name, image, LEFT(description, 125) || CASE WHEN LENGTH(description) > 100 THEN '...' ELSE '' END AS description FROM attraction WHERE is_favorite = true");
+    return res.status(200).json(rows);
+  }catch(err){
+    console.log(err);
+  }
+}

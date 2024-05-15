@@ -99,6 +99,7 @@ exports.deleteUser = async (req, res) => {
 
 exports.getLoggedInUser = async (req, res) => {
   const jwt_payload = jwt.decode(req.cookies.token);
+  console.log(jwt_payload);
   const userId = jwt_payload.id;
 
   try {

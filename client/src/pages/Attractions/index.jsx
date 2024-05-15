@@ -10,6 +10,8 @@ import FilterAttraction from "../../components/Management/Attractions/FilterAttr
 import useGetAttractions from "../../hooks/useGetAttractions";
 import useLocalStorageState from "../../hooks/useLocalStorageState";
 import CustomPagination from "../../components/Common/CustomPagination";
+import { getFavoriteAttractions } from "../../api/attraction";
+import axios from "axios";
 
 export default function Attractions() {
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
@@ -22,6 +24,7 @@ export default function Attractions() {
   const searchResults = attractions;
 
   const [items, setItems] = useState();
+  const [favorite, setFavorite] = useState([]);
 
   // useState for searchbar
   const [queryAttractions, setQueryAttractions] = useState("");
@@ -36,21 +39,23 @@ export default function Attractions() {
   const [minFee, setMinFee] = useState("");
   const [maxFee, setMaxFee] = useState("");
 
-  const [favorite, setFavorite] = useLocalStorageState(
-    [],
-    "favoriteAttractions"
-  );
+  // const [favorite, setFavorite] = useLocalStorageState(
+  //   [],
+  //   "favoriteAttractions"
+  // );
+
+
 
   const navigate = useNavigate();
 
   // Fetch attractions from our custom hook
   const { isLoading } = useGetAttractions();
 
-  const handleAddFavorite = (attraction) => {
-    !isAuth && navigate("/user/login");
+  // const handleAddFavorite = (attraction) => {
+  //   !isAuth && navigate("/user/login");
 
-    isAuth && setFavorite((curAttraction) => [...curAttraction, attraction]);
-  };
+  //   isAuth && setFavorite((curAttraction) => [...curAttraction, attraction]);
+  // };
 
   const handleOnClickSearch = (e) => {
     e.preventDefault();
@@ -71,10 +76,6 @@ export default function Attractions() {
     setFilterLocation(e.target.textContent);
     !e.target.textContent.length && setItems(searchResults);
   };
-
-  console.log("filterLocation: ", filterLocation)
-  console.log("minFee: ", minFee)
-  console.log("maxFee: ", maxFee)
 
   const handleFilterAttractions = (e) => {
     e.preventDefault();
@@ -116,9 +117,19 @@ export default function Attractions() {
     
 
   };
-  console.log("items: ", items);
+  
   useEffect(() => {
-    setItems(attractions);
+    const getAttractions = async() => {
+      try{
+  
+        setItems(attractions);
+        const favoriteAttractions = await getFavoriteAttractions()
+        setFavorite(favoriteAttractions.data);
+      }catch(err){
+        console.log();
+      }
+    }
+    getAttractions();
   }, [attractions]);
 
   // !isLoading && !queryAttractions.length
@@ -187,7 +198,6 @@ export default function Attractions() {
                       props={attraction}
                       favorite={favorite}
                       isType="attractions"
-                      onAddFavorite={handleAddFavorite}
                     />
                   ))
                 :

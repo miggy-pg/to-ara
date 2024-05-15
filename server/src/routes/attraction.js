@@ -5,6 +5,9 @@ const {
   editAttraction,
   getAttractions,
   getAttraction,
+  addToFavorite,
+  removeFromFavorite,
+  getAttractionFavorites,
 } = require("../controllers/attraction");
 const multerMiddleware = require("../middlewares/attraction-multer-middleware");
 const {
@@ -25,6 +28,9 @@ const router = Router();
 
 router.get("/attractions", validationMiddleware, getAttractions);
 router.get("/attractions/:id", validationMiddleware, getAttraction);
+router.get("/favorites/attractions", getAttractionFavorites);
+router.put("/attractions/favorites/add", validationMiddleware, addToFavorite);
+router.put("/attractions/favorites/remove", validationMiddleware, removeFromFavorite);
 router.post("/attractions", multerMiddleware.single("image"), createAttraction);
 router.put(
   "/attractions/:id",

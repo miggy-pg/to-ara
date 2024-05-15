@@ -1,6 +1,5 @@
 export const barangays = [
   { city: "Iligan", label: "Iligan" },
-<<<<<<< HEAD
   { city: "Iligan", label: "Cebu" },
   { city: "Iligan", label: "Abuno" },
   { city: "Iligan", label: "Acmac" },
@@ -46,26 +45,4 @@ export const barangays = [
   { city: "Tubod", label: "Sagadan" },
   { city: "Tubod", label: "Imelda" },
   { city: "Tubod", label: "Maguindanao" },
-=======
-  // { city: "Iligan", label: "Cebu" },
-  // { city: "Iligan", label: "Abuno" },
-  // { city: "Iligan", label: "Acmac" },
-  // { city: "Iligan", label: "Bagong Silang" },
-  { city: "Lanao del Norte", label: "Lanao del Norte" },
-  // { city: "Lanao del Norte", label: "Libertad" },
-  // { city: "Lanao del Norte", label: "Mago-ong" },
-  // { city: "Lanao del Norte", label: "Aurora" },
-  // { city: "Lanao del Norte", label: "San Isidro" },
-  // { city: "Lanao del Norte", label: "Maranding" },
-  // { city: "Lanao del Norte", label: "Maranding Annex" },
-  // { city: "Lanao del Norte", label: "Maria Cristina" },
-  // { city: "Lanao del Norte", label: "Rizal" },
-  // { city: "Lanao del Norte", label: "Gatas" },
-  // { city: "Lanao del Norte", label: "Mahayahay" },
-  // { city: "Lanao del Norte", label: "Taytayan" },
-  // { city: "Lanao del Norte", label: "Nibunga" },
-  // { city: "Lanao del Norte", label: "Sagadan" },
-  // { city: "Lanao del Norte", label: "Imelda" },
-  // { city: "Lanao del Norte", label: "Maguindanao" },
->>>>>>> 886ab8f (fix: page filters)
 ];

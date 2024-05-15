@@ -27,3 +27,17 @@ export async function editFestival(id, editFestival) {
 export async function deleteFestival(id) {
   return await axios.delete(`http://localhost:4000/api/v1/festivals/${id}`);
 }
+export async function getFavoriteFestival() {
+  return await axios.get("http://localhost:4000/api/v1/favorites/festivals");
+}
+
+export async function addToFavoriteFestival(id) {
+  console.log("Testing AddFavorite");
+  return await axios.put("http://localhost:4000/api/v1/festivals/favorites/add", { id });
+}
+
+export async function deleteFromFavoriteFestival(id) {
+  console.log("Testing DeleteFavorite");
+  return await axios.put("http://localhost:4000/api/v1/festivals/favorites/remove", { id });
+}
+

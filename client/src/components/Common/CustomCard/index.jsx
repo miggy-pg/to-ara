@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, Navigate, useLocation } from "react-router-dom";
 
 import {
   Button,
@@ -11,23 +11,44 @@ import {
 } from "@mui/material";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
+import { addToFavoriteAttraction } from "../../../api/attraction";
+import { addToFavoriteAccommodation } from "../../../api/accommodation";
+import { addToFavoriteFestival } from "../../../api/festival";
+import { useSelector } from "react-redux";
 
-export default function CustomCard({ props, favorite, isType, onAddFavorite }) {
+export default function CustomCard({ props, favorite, isType, addFavorite }) {
   const { id: selectedId, image, name, description } = props;
+  const { isAuth } = useSelector((state) => state.auth);
+
+  const location = useLocation() 
+  const handleAddFavorite = async (id) => {
+    try {
+      !isAuth && <Navigate to="user/login" />;
+
+      if (location.pathname == "/attractions") {
+        await addToFavoriteAttraction(id);
+      } else if (location.pathname == "/accommodations") {
+        await addToFavoriteAccommodation(id);
+      } else if (location.pathname == "/festivals") {
+        await addToFavoriteFestival(id);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const isFavorite = favorite
     .map((attraction) => attraction.id)
     .includes(selectedId);
-
-  const handleAdd = () => {
-    const newAddedFavorite = {
-      image: image,
-      name: name,
-      description: description,
-      id: selectedId,
-    };
-    !isFavorite && onAddFavorite(newAddedFavorite);
-  };
+  // const handleAdd = () => {
+  //   const newAddedFavorite = {
+  //     image: image,
+  //     name: name,
+  //     description: description,
+  //     id: selectedId,
+  //   };
+  //   !isFavorite && onAddFavorite(newAddedFavorite);
+  // };
 
   function removeLastWordExceedingChars(inputString) {
     if (inputString.length > 23) {
@@ -125,7 +146,7 @@ export default function CustomCard({ props, favorite, isType, onAddFavorite }) {
                   mt: "0.9rem",
                   mr: 0,
                 }}
-                onClick={handleAdd}
+                onClick={()=>handleAddFavorite(selectedId)}
                 control={
                   <Checkbox
                     icon={<FavoriteOutlinedIcon />}

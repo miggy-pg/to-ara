@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { Navigate, useNavigate, useParams } from "react-router";
 
@@ -26,7 +26,7 @@ import { styled } from "@mui/material/styles";
 import Menu from "../../../Common/Menu";
 import MapLocator from "../../../Common/MapLocator";
 import useLocalStorageState from "../../../../hooks/useLocalStorageState";
-import { getAccommodation } from "../../../../api/accommodation";
+import { addToFavoriteAccommodation, deleteFromFavoriteAccommodation, getAccommodation, getFavoriteAccommodations } from "../../../../api/accommodation";
 
 import "./styles.css";
 import "react-multi-carousel/lib/styles.css";
@@ -50,11 +50,33 @@ export default function AccommodationDetail() {
   console.log("accomodations: ", accomodations);
   const { id } = useParams();
   const navigate = useNavigate();
+  const [favorite, setFavorite] = useState([])
 
-  const [favorite, setFavorite] = useLocalStorageState(
-    [],
-    "favoriteAccommodations"
-  );
+  // const [favorite, setFavorite] = useLocalStorageState(
+  //   [],
+  //   "favoriteAccommodations"
+  // );
+  const handleDeleteFavorite = async (id) => {
+    try {
+    !isAuth && <Navigate to="user/login" />;
+
+      await deleteFromFavoriteAccommodation(id);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  
+  const handleAddFavorite = async (id) => {
+    try {
+    !isAuth && <Navigate to="user/login" />;
+
+      await addToFavoriteAccommodation(id);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+
 
   const isFavorite = favorite
     ?.map((accomodation) => String(accomodation.id))
@@ -63,32 +85,32 @@ export default function AccommodationDetail() {
   const [isSidebarOpen] = useState(true);
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
 
-  const handleDeleteFavorite = (id) => {
-    !isAuth && <Navigate to="user/login" />;
+  // const handleDeleteFavorite = (id) => {
+  //   !isAuth && <Navigate to="user/login" />;
 
-    isAuth &&
-      setFavorite((favoriteAccomodation) =>
-        favoriteAccomodation.filter(
-          (attr) => parseInt(attr.id) !== parseInt(id)
-        )
-      );
-  };
+  //   isAuth &&
+  //     setFavorite((favoriteAccomodation) =>
+  //       favoriteAccomodation.filter(
+  //         (attr) => parseInt(attr.id) !== parseInt(id)
+  //       )
+  //     );
+  // };
 
-  const handleAddFavorite = (accomodation) => {
-    setFavorite((curAccomodation) => [...curAccomodation, accomodation]);
-  };
+  // const handleAddFavorite = (accomodation) => {
+  //   setFavorite((curAccomodation) => [...curAccomodation, accomodation]);
+  // };
 
-  const handleAdd = () => {
-    !isAuth && navigate("/user/login");
+  // const handleAdd = () => {
+  //   !isAuth && navigate("/user/login");
 
-    const newAddedFavorite = {
-      image: currAccomodation.image,
-      name: currAccomodation.name,
-      description: currAccomodation.description,
-      id: id,
-    };
-    isAuth && !isFavorite && handleAddFavorite(newAddedFavorite);
-  };
+  //   const newAddedFavorite = {
+  //     image: currAccomodation.image,
+  //     name: currAccomodation.name,
+  //     description: currAccomodation.description,
+  //     id: id,
+  //   };
+  //   isAuth && !isFavorite && handleAddFavorite(newAddedFavorite);
+  // };
 
   useEffect(() => {
     async function getAPIAccomodation() {
@@ -105,6 +127,15 @@ export default function AccommodationDetail() {
     }
     getAPIAccomodation();
   }, []);
+
+  useMemo(()=>{
+    const getAttractionFavorites = async() =>{
+      const favorites = await getFavoriteAccommodations()
+      setFavorite(favorites.data)
+    }
+    getAttractionFavorites()
+  },[])
+
 
   return (
     <Container
@@ -214,7 +245,7 @@ export default function AccommodationDetail() {
                 />
               ) : (
                 <FormControlLabel
-                  onClick={handleAdd}
+                  onClick={()=>handleAddFavorite(id)}
                   control={
                     <Checkbox
                       icon={<FavoriteOutlinedIcon />}

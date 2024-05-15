@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { Navigate, useNavigate, useParams } from "react-router";
 import { Link } from "react-router-dom";
@@ -29,9 +29,8 @@ import { styled } from "@mui/material/styles";
 
 import Menu from "../../../Common/Menu";
 import MapLocator from "../../../Common/MapLocator";
-import useLocalStorageState from "../../../../hooks/useLocalStorageState";
 import findNearbyCoordinates from "../../../../utils/findNearbyCoordinates";
-import { getAttraction } from "../../../../api/attraction";
+import { addToFavoriteAttraction,  deleteFromFavoriteAttraction, getAttraction, getFavoriteAttractions} from "../../../../api/attraction";
 
 import "./styles.css";
 import "react-multi-carousel/lib/styles.css";
@@ -76,10 +75,12 @@ export default function AttractionDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const [favorite, setFavorite] = useLocalStorageState(
-    [],
-    "favoriteAttractions"
-  );
+  const [favorite, setFavorite] = useState([])
+  // const [favorite, setFavorite] = useLocalStorageState(
+  //   [],
+  //   "favoriteAttractions"
+  // );
+
 
   const isFavorite = favorite
     ?.map((attraction) => String(attraction.id))
@@ -88,30 +89,50 @@ export default function AttractionDetail() {
   const [isSidebarOpen] = useState(true);
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
 
-  const handleDeleteFavorite = (id) => {
-    !isAuth && <Navigate to="user/login" />;
+  // const handleDeleteFavorite = (id) => {
+  //   !isAuth && <Navigate to="user/login" />;
 
-    isAuth &&
-      setFavorite((favoriteAttraction) =>
-        favoriteAttraction.filter((attr) => parseInt(attr.id) !== parseInt(id))
-      );
+  //   isAuth &&
+  //     setFavorite((favoriteAttraction) =>
+  //       favoriteAttraction.filter((attr) => parseInt(attr.id) !== parseInt(id))
+  //     );
+  // };
+
+  const handleDeleteFavorite = async (id) => {
+    try {
+      !isAuth && <Navigate to="user/login" />;
+
+      await deleteFromFavoriteAttraction(id);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  
+  const handleAddFavorite = async (id) => {
+    try {
+      !isAuth && <Navigate to="user/login" />;
+
+      await addToFavoriteAttraction(id);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  const handleAddFavorite = (attraction) => {
-    setFavorite((curAttraction) => [...curAttraction, attraction]);
-  };
+  // const handleAddFavorite = (attraction) => {
+  //   setFavorite((curAttraction) => [...curAttraction, attraction]);
+  // };
 
-  const handleAdd = () => {
-    !isAuth && navigate("/user/login");
+  // const handleAdd = () => {
+  //   !isAuth && navigate("/user/login");
 
-    const newAddedFavorite = {
-      image: currAttraction.image,
-      name: currAttraction.name,
-      description: currAttraction.description,
-      id: id,
-    };
-    isAuth && !isFavorite && handleAddFavorite(newAddedFavorite);
-  };
+  //   const newAddedFavorite = {
+  //     image: currAttraction.image,
+  //     name: currAttraction.name,
+  //     description: currAttraction.description,
+  //     id: id,
+  //   };
+  //   isAuth && !isFavorite && handleAddFavorite(newAddedFavorite);
+  // };
 
   useEffect(() => {
     async function getAPIAttraction() {
@@ -144,7 +165,15 @@ export default function AttractionDetail() {
     !isLoading && accommodations
   );
 
-    
+  useMemo(()=>{
+    const getAttractionFavorites = async() =>{
+      const favorites = await getFavoriteAttractions()
+      setFavorite(favorites.data)
+    }
+    getAttractionFavorites()
+  },[])
+   
+
 
   return (
     <Container
@@ -220,7 +249,7 @@ export default function AttractionDetail() {
                 />
               ) : (
                 <FormControlLabel
-                  onClick={handleAdd}
+                  onClick={()=>handleAddFavorite(id)}
                   control={
                     <Checkbox
                       icon={<FavoriteOutlinedIcon />}

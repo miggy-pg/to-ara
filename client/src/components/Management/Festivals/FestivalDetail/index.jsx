@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import { Navigate, useNavigate, useParams } from "react-router";
 import { Link } from "react-router-dom";
@@ -31,7 +31,7 @@ import Menu from "../../../Common/Menu";
 import MapLocator from "../../../Common/MapLocator";
 import useLocalStorageState from "../../../../hooks/useLocalStorageState";
 import findNearbyCoordinates from "../../../../utils/findNearbyCoordinates";
-import { getFestival } from "../../../../api/festival";
+import { addToFavoriteFestival, deleteFromFavoriteFestival, getFavoriteFestival, getFestival } from "../../../../api/festival";
 
 import "./styles.css";
 import "react-multi-carousel/lib/styles.css";
@@ -75,8 +75,9 @@ export default function FestivalDetail() {
 
   const { id } = useParams();
   const navigate = useNavigate();
+  const [favorite, setFavorite] = useState([])
 
-  const [favorite, setFavorite] = useLocalStorageState([], "favoriteFestivals");
+  // const [favorite, setFavorite] = useLocalStorageState([], "favoriteFestivals");
 
   const isFavorite = favorite
     ?.map((festival) => String(festival.id))
@@ -85,30 +86,51 @@ export default function FestivalDetail() {
   const [isSidebarOpen] = useState(true);
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
 
-  const handleDeleteFavorite = (id) => {
-    !isAuth && <Navigate to="user/login" />;
 
-    isAuth &&
-      setFavorite((favoriteFestival) =>
-        favoriteFestival.filter((attr) => parseInt(attr.id) !== parseInt(id))
-      );
+  const handleDeleteFavorite = async (id) => {
+    try {
+      !isAuth && <Navigate to="user/login" />;
+
+      await deleteFromFavoriteFestival(id);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  
+  const handleAddFavorite = async (id) => {
+    try {
+      !isAuth && <Navigate to="user/login" />;
+
+      await addToFavoriteFestival(id);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  const handleAddFavorite = (festival) => {
-    setFavorite((curFestival) => [...curFestival, festival]);
-  };
+  // const handleDeleteFavorite = (id) => {
+  //   !isAuth && <Navigate to="user/login" />;
 
-  const handleAdd = () => {
-    !isAuth && navigate("/user/login");
+  //   isAuth &&
+  //     setFavorite((favoriteFestival) =>
+  //       favoriteFestival.filter((attr) => parseInt(attr.id) !== parseInt(id))
+  //     );
+  // };
 
-    const newAddedFavorite = {
-      image: currFestival.image,
-      name: currFestival.name,
-      description: currFestival.description,
-      id: id,
-    };
-    isAuth && !isFavorite && handleAddFavorite(newAddedFavorite);
-  };
+  // const handleAddFavorite = (festival) => {
+  //   setFavorite((curFestival) => [...curFestival, festival]);
+  // };
+
+  // const handleAdd = () => {
+  //   !isAuth && navigate("/user/login");
+
+  //   const newAddedFavorite = {
+  //     image: currFestival.image,
+  //     name: currFestival.name,
+  //     description: currFestival.description,
+  //     id: id,
+  //   };
+  //   isAuth && !isFavorite && handleAddFavorite(newAddedFavorite);
+  // };
 
   useEffect(() => {
     async function getAPIFestival() {
@@ -127,10 +149,19 @@ export default function FestivalDetail() {
   useEffect(() => {
     async function fetchAccommodations() {
       const { data: accoms } = await getAccommodations();
+      console.log("accoms: ", accoms);
       const { data: accommodations } = accoms
       setAccommodations(accommodations)
     }
     fetchAccommodations()
+  },[])
+
+  useMemo(()=>{
+    const getAttractionFavorites = async() =>{
+      const favorites = await getFavoriteFestival()
+      setFavorite(favorites.data)
+    }
+    getAttractionFavorites()
   },[])
 
   const nearby = findNearbyCoordinates(
@@ -214,7 +245,7 @@ export default function FestivalDetail() {
                 />
               ) : (
                 <FormControlLabel
-                  onClick={handleAdd}
+                  onClick={()=>handleAddFavorite(id)}
                   control={
                     <Checkbox
                       icon={<FavoriteOutlinedIcon />}

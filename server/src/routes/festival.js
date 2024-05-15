@@ -5,6 +5,9 @@ const {
   editFestival,
   getFestivals,
   getFestival,
+  getFestivalFavorites,
+  addToFavorite,
+  removeFromFestivalFavorite,
 } = require("../controllers/festival");
 const multerMiddleware = require("../middlewares/festival-multer-middleware");
 const {
@@ -25,6 +28,10 @@ const router = Router();
 
 router.get("/festivals", validationMiddleware, getFestivals);
 router.get("/festivals/:id", validationMiddleware, getFestival);
+router.get("/favorites/festivals", getFestivalFavorites);
+router.put("/festivals/favorites/add", validationMiddleware, addToFavorite);
+router.put("/festivals/favorites/remove", validationMiddleware, removeFromFestivalFavorite);
+
 router.post("/festivals", multerMiddleware.single("image"), createFestival);
 router.put("/festivals/:id", multerMiddleware.single("image"), editFestival);
 router.delete("/festivals/:id", validationMiddleware, deleteFestival);

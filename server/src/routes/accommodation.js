@@ -5,6 +5,9 @@ const {
   editAccommodation,
   getAccommodations,
   getAccommodation,
+  getAccommodationFavorites,
+  addToFavorite,
+  removeFromAccommodationFavorite,
 } = require("../controllers/accommodation");
 const multerMiddleware = require("../middlewares/accommodation-multer-middleware");
 const {
@@ -25,6 +28,10 @@ const router = Router();
 
 router.get("/accommodations", validationMiddleware, getAccommodations);
 router.get("/accommodations/:id", validationMiddleware, getAccommodation);
+router.get("/favorites/accommodations", getAccommodationFavorites);
+router.put("/accommodations/favorites/add", validationMiddleware, addToFavorite);
+router.put("/accommodations/favorites/remove", validationMiddleware, removeFromAccommodationFavorite);
+
 router.post(
   "/accommodations",
   multerMiddleware.single("image"),
