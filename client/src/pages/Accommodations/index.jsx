@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router";
+import { Navigate, useNavigate } from "react-router";
 import { Box, Container, Grid, Typography, useMediaQuery } from "@mui/material";
 
 import Menu from "../../components/Common/Menu";
@@ -9,10 +9,12 @@ import useGetAccommodations from "../../hooks/useGetAccommodation";
 import AccommodationFilter from "../../components/Management/Accommodations/AccommodationFilter";
 import useLocalStorageState from "../../hooks/useLocalStorageState";
 import CustomPagination from "../../components/Common/CustomPagination";
+import { addToFavoriteAccommodation, getFavoriteAccommodations } from "../../api/accommodation";
 
 export default function Accommodations() {
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
   const [isSidebarOpen, setSidebarOpen] = useState(true);
+  const userId = JSON.parse(localStorage.getItem("userId"))
 
   const { isAuth } = useSelector((state) => state.auth);
 
@@ -40,22 +42,32 @@ export default function Accommodations() {
   const [indexOfLastItem, setIndexOfLastItem] = useState(null);
   const [indexOfFirstItem, setIndexOfFirstItem] = useState(null);
 
-  const [favorite, setFavorite] = useLocalStorageState(
-    [],
-    "favoriteAccommodations"
-  );
+  const [favorite, setFavorite] = useState([])
+  // const [favorite, setFavorite] = useLocalStorageState(
+  //   [],
+  //   "favoriteAccommodations"
+  // );
 
   const navigate = useNavigate();
 
   // Fetch accommodations from our custom hook
   const { isLoading } = useGetAccommodations();
+  const handleAddFavorite = async (id) => {
+    try {
+    !isAuth && <Navigate to="user/login" />;
 
-  const handleAddFavorite = (accommodation) => {
-    !isAuth && navigate("/user/login");
-
-    isAuth &&
-      setFavorite((currAccommodation) => [...currAccommodation, accommodation]);
+      await addToFavoriteAccommodation(id, userId);
+    } catch (err) {
+      console.log(err);
+    }
   };
+
+  // const handleAddFavorite = (accommodation) => {
+  //   !isAuth && navigate("/user/login");
+
+  //   isAuth &&
+  //     setFavorite((currAccommodation) => [...currAccommodation, accommodation]);
+  // };
 
   const handleOnClickSearch = (e) => {
     e.preventDefault();
@@ -189,6 +201,12 @@ export default function Accommodations() {
   console.log("accommodationsStatus:: ", accommodationStatus)
   useEffect(() => {
     setItems(accommodations);
+    const getAttractionFavorites = async() =>{
+      const favorites = await getFavoriteAccommodations(userId)
+      setFavorite(favorites.data)
+    }
+    getAttractionFavorites()
+
   }, [accommodations]);
 
 

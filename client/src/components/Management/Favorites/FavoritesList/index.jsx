@@ -10,6 +10,7 @@ export default function FavoritesList() {
    const [favoriteAttractions, setFavoriteAttractions] = useState([]);
   const [favoriteAccommodations, setFavoriteAccommodations] = useState([]);
   const [favoriteFestivals, setFavoriteFestivals] = useState([]);
+  const userId = JSON.parse(localStorage.getItem("userId"))
 
   //  const favoriteAccommodations = localStorage.getItem("favoriteAccommodations");
    
@@ -17,17 +18,17 @@ export default function FavoritesList() {
    
    const attrs = useMemo(() => {
       const getAttractionFavorites = async () => {
-        const favorites = await getFavoriteAttractions() 
+        const favorites = await getFavoriteAttractions(userId) 
         setFavoriteAttractions(favorites.data)
 
-        const favoriteAccommodations = await getFavoriteAccommodations()
+        const favoriteAccommodations = await getFavoriteAccommodations(userId)
         setFavoriteAccommodations(favoriteAccommodations.data)
 
-        const favoriteFestivals = await getFavoriteFestival()
+        const favoriteFestivals = await getFavoriteFestival(userId)
         setFavoriteFestivals(favoriteFestivals.data)
      }
      getAttractionFavorites()
-   },[]);
+   },[userId]);
 
    console.log("attrs: ", attrs);
 

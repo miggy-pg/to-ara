@@ -28,7 +28,7 @@ const router = Router();
 
 router.get("/festivals", validationMiddleware, getFestivals);
 router.get("/festivals/:id", validationMiddleware, getFestival);
-router.get("/favorites/festivals", getFestivalFavorites);
+router.get("/favorites/festivals/:userId", getFestivalFavorites);
 router.put("/festivals/favorites/add", validationMiddleware, addToFavorite);
 router.put("/festivals/favorites/remove", validationMiddleware, removeFromFestivalFavorite);
 

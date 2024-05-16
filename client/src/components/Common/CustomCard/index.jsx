@@ -17,6 +17,7 @@ import { addToFavoriteFestival } from "../../../api/festival";
 import { useSelector } from "react-redux";
 
 export default function CustomCard({ props, favorite, isType, addFavorite }) {
+  const userId = JSON.parse(localStorage.getItem("userId"))
   const { id: selectedId, image, name, description } = props;
   const { isAuth } = useSelector((state) => state.auth);
 
@@ -26,11 +27,11 @@ export default function CustomCard({ props, favorite, isType, addFavorite }) {
       !isAuth && <Navigate to="user/login" />;
 
       if (location.pathname == "/attractions") {
-        await addToFavoriteAttraction(id);
+        await addToFavoriteAttraction(id, userId);
       } else if (location.pathname == "/accommodations") {
-        await addToFavoriteAccommodation(id);
+        await addToFavoriteAccommodation(id, userId);
       } else if (location.pathname == "/festivals") {
-        await addToFavoriteFestival(id);
+        await addToFavoriteFestival(id, userId);
       }
     } catch (err) {
       console.log(err);

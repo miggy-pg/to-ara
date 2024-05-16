@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { Navigate, useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 
 import { Box, Container, Grid, Typography, useMediaQuery } from "@mui/material";
@@ -10,13 +10,14 @@ import FilterAttraction from "../../components/Management/Attractions/FilterAttr
 import useGetAttractions from "../../hooks/useGetAttractions";
 import useLocalStorageState from "../../hooks/useLocalStorageState";
 import CustomPagination from "../../components/Common/CustomPagination";
-import { getFavoriteAttractions } from "../../api/attraction";
+import { addToFavoriteAttraction, getFavoriteAttractions } from "../../api/attraction";
 import axios from "axios";
+import { addToFavoriteAccommodation } from "../../api/accommodation";
 
 export default function Attractions() {
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
   const [isSidebarOpen, setSidebarOpen] = useState(true);
-
+  const userId = JSON.parse(localStorage.getItem("userId"))
   // Since we are using redux, we can get the attractions data from the store
   const { isAuth } = useSelector((state) => state.auth);
 
@@ -50,6 +51,17 @@ export default function Attractions() {
 
   // Fetch attractions from our custom hook
   const { isLoading } = useGetAttractions();
+
+  const handleAddFavorite = async (id) => {
+    try {
+    !isAuth && <Navigate to="user/login" />;
+
+      await addToFavoriteAttraction(id, userId);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
 
   // const handleAddFavorite = (attraction) => {
   //   !isAuth && navigate("/user/login");
@@ -123,7 +135,7 @@ export default function Attractions() {
       try{
   
         setItems(attractions);
-        const favoriteAttractions = await getFavoriteAttractions()
+        const favoriteAttractions = await getFavoriteAttractions(userId)
         setFavorite(favoriteAttractions.data);
       }catch(err){
         console.log();
@@ -198,6 +210,8 @@ export default function Attractions() {
                       props={attraction}
                       favorite={favorite}
                       isType="attractions"
+                    onAddFavorite={handleAddFavorite}
+
                     />
                   ))
                 :

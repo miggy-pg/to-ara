@@ -66,6 +66,7 @@ const responsive = {
 
 export default function AttractionDetail() {
   const { isAuth } = useSelector((state) => state.auth);
+  const userId = JSON.parse(localStorage.getItem("userId"))
 
   const [accommodations, setAccommodations] = useState({})
   const [attractions, setAttractions] = useState({});
@@ -102,17 +103,16 @@ export default function AttractionDetail() {
     try {
       !isAuth && <Navigate to="user/login" />;
 
-      await deleteFromFavoriteAttraction(id);
+      await deleteFromFavoriteAttraction(id, userId);
     } catch (err) {
       console.log(err);
     }
   }
-  
   const handleAddFavorite = async (id) => {
     try {
       !isAuth && <Navigate to="user/login" />;
 
-      await addToFavoriteAttraction(id);
+      await addToFavoriteAttraction(id, userId);
     } catch (err) {
       console.log(err);
     }
@@ -167,7 +167,7 @@ export default function AttractionDetail() {
 
   useMemo(()=>{
     const getAttractionFavorites = async() =>{
-      const favorites = await getFavoriteAttractions()
+      const favorites = await getFavoriteAttractions(userId)
       setFavorite(favorites.data)
     }
     getAttractionFavorites()

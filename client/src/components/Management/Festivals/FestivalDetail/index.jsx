@@ -67,6 +67,7 @@ const responsive = {
 
 export default function FestivalDetail() {
   const { isAuth } = useSelector((state) => state.auth);
+  const userId = JSON.parse(localStorage.getItem("userId"))
 
   const [accommodations, setAccommodations] = useState({})
   const [festivals, setFestivals] = useState({});
@@ -91,7 +92,7 @@ export default function FestivalDetail() {
     try {
       !isAuth && <Navigate to="user/login" />;
 
-      await deleteFromFavoriteFestival(id);
+      await deleteFromFavoriteFestival(id, userId);
     } catch (err) {
       console.log(err);
     }
@@ -101,7 +102,7 @@ export default function FestivalDetail() {
     try {
       !isAuth && <Navigate to="user/login" />;
 
-      await addToFavoriteFestival(id);
+      await addToFavoriteFestival(id, userId);
     } catch (err) {
       console.log(err);
     }
@@ -158,7 +159,7 @@ export default function FestivalDetail() {
 
   useMemo(()=>{
     const getAttractionFavorites = async() =>{
-      const favorites = await getFavoriteFestival()
+      const favorites = await getFavoriteFestival(userId)
       setFavorite(favorites.data)
     }
     getAttractionFavorites()

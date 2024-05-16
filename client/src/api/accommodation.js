@@ -29,16 +29,16 @@ export async function deleteAccommodation(id) {
     `http://localhost:4000/api/v1/accommodations/${id}`
   );
 }
-export async function getFavoriteAccommodations() {
-  return await axios.get("http://localhost:4000/api/v1/favorites/accommodations");
+export async function getFavoriteAccommodations(userId) {
+  return await axios.get(`http://localhost:4000/api/v1/favorites/accommodations/${userId}`);
 }
 
-export async function addToFavoriteAccommodation(id) {
+export async function addToFavoriteAccommodation(id, userId) {
   console.log("Testing AddFavorite");
-  return await axios.put("http://localhost:4000/api/v1/accommodations/favorites/add", { id });
+  return await axios.put("http://localhost:4000/api/v1/accommodations/favorites/add", { id, userId });
 }
 
-export async function deleteFromFavoriteAccommodation(id) {
+export async function deleteFromFavoriteAccommodation(id, userId) {
   console.log("Testing DeleteFavorite");
-  return await axios.put("http://localhost:4000/api/v1/accommodations/favorites/remove", { id });
+  return await axios.put("http://localhost:4000/api/v1/accommodations/favorites/remove", { id, userId });
 }

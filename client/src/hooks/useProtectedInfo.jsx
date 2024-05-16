@@ -15,6 +15,7 @@ export default function protectedInfo() {
       dispatch(unauthenticateUser());
       localStorage.removeItem("isAuth");
       localStorage.removeItem("isAdmin");
+      localStorage.removeItem("userId");
     } catch (error) {
       console.log(error.response);
     }

@@ -43,8 +43,10 @@ export default function Login() {
 
     try {
       await onLogin(values).then((res) => {
+        console.log("res:", res);
         dispatch(setUserRole(res.data.admin));
         localStorage.setItem("isAdmin", res.data.admin);
+        localStorage.setItem("userId", res.data.userId);
       });
       dispatch(authenticateUser());
 

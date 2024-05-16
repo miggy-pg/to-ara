@@ -42,6 +42,8 @@ const CardCover = styled(Card)(
 
 export default function AccommodationDetail() {
   const { isAuth } = useSelector((state) => state.auth);
+  const userId = JSON.parse(localStorage.getItem("userId"))
+
 
   const [accomodations, setAccomodations] = useState({});
   const [currAccomodation, setCurrAccomodation] = useState({});
@@ -60,7 +62,7 @@ export default function AccommodationDetail() {
     try {
     !isAuth && <Navigate to="user/login" />;
 
-      await deleteFromFavoriteAccommodation(id);
+      await deleteFromFavoriteAccommodation(id, userId);
     } catch (err) {
       console.log(err);
     }
@@ -70,7 +72,7 @@ export default function AccommodationDetail() {
     try {
     !isAuth && <Navigate to="user/login" />;
 
-      await addToFavoriteAccommodation(id);
+      await addToFavoriteAccommodation(id, userId);
     } catch (err) {
       console.log(err);
     }
@@ -130,7 +132,7 @@ export default function AccommodationDetail() {
 
   useMemo(()=>{
     const getAttractionFavorites = async() =>{
-      const favorites = await getFavoriteAccommodations()
+      const favorites = await getFavoriteAccommodations(userId)
       setFavorite(favorites.data)
     }
     getAttractionFavorites()

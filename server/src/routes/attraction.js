@@ -28,7 +28,7 @@ const router = Router();
 
 router.get("/attractions", validationMiddleware, getAttractions);
 router.get("/attractions/:id", validationMiddleware, getAttraction);
-router.get("/favorites/attractions", getAttractionFavorites);
+router.get("/favorites/attractions/:userId", getAttractionFavorites);
 router.put("/attractions/favorites/add", validationMiddleware, addToFavorite);
 router.put("/attractions/favorites/remove", validationMiddleware, removeFromFavorite);
 router.post("/attractions", multerMiddleware.single("image"), createAttraction);

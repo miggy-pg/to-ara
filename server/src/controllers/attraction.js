@@ -152,10 +152,10 @@ exports.deleteAttraction = async (req, res) => {
 };
 
 exports.addToFavorite = async(req, res) => {
-  const {id} = req.body
+  const { id, userId } = req.body
 
   try {
-    await db.query("UPDATE attraction SET is_favorite = true WHERE id = $1", [id])
+    await db.query("INSERT INTO user_favorites (user_id, attraction_id) VALUES ($1, $2);", [userId, id])
   }
   catch(err){
     console.log(err)
@@ -163,9 +163,11 @@ exports.addToFavorite = async(req, res) => {
 }
 
 exports.removeFromFavorite = async(req, res) => {
-  const {id} = req.body
+  const { id, userId } = req.body
+  
   try {
-    await db.query("UPDATE attraction SET is_favorite = false WHERE id = $1", [id])
+    await db.query("DELETE FROM user_favorites WHERE user_id = $1 AND attraction_id = $2;", [userId, id])
+
   }
   catch(err){
     console.log(err)
@@ -174,7 +176,8 @@ exports.removeFromFavorite = async(req, res) => {
 
 exports.getAttractionFavorites = async(req, res) => {
   try{
-    const {rows} = await db.query("SELECT id, name, image, LEFT(description, 125) || CASE WHEN LENGTH(description) > 100 THEN '...' ELSE '' END AS description FROM attraction WHERE is_favorite = true");
+    const userId = req.params.userId
+    const {rows} = await db.query("SELECT a.id, a.name, a.description, a.image FROM attraction a JOIN user_favorites uf ON a.id = uf.attraction_id WHERE uf.user_id = $1; ", [userId]);
     return res.status(200).json(rows);
   }catch(err){
     console.log(err);

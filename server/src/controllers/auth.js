@@ -53,6 +53,7 @@ exports.loginUsers = async (req, res) => {
     return res.status(200).cookie("token", token, { httpOnly: true }).json({
       sucess: true,
       admin: user.admin,
+      userId: user.id,
       message: "Login successful. Dive into new destinations!",
     });
   } catch (err) {

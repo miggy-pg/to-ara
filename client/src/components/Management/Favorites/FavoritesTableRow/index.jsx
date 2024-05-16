@@ -10,6 +10,7 @@ import { deleteFromFavoriteAccommodation } from "../../../../api/accommodation";
 
 export default function FavoritesTableRow({ props, routePath }) {
   const { id, image, name, description } = props;
+  const userId = JSON.parse(localStorage.getItem("userId"))
   console.log("props", props);
 
   console.log("setFavorite", `favorite${routePath}`);
@@ -23,13 +24,13 @@ export default function FavoritesTableRow({ props, routePath }) {
   const handleDeleteFavorite = async(id) => {
     try {
       if (routePath === "Attractions") {
-        await deleteFromFavoriteAttraction(id);
+        await deleteFromFavoriteAttraction(id, userId);
       }
       else if (routePath === "Accommodations") {
-        await deleteFromFavoriteAccommodation(id);
+        await deleteFromFavoriteAccommodation(id, userId);
       }
       else if (routePath === "Festivals") {
-        await deleteFromFavoriteFestival(id);
+        await deleteFromFavoriteFestival(id, userId);
       }
     }catch (err){
       console.log(err);

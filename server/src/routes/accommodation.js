@@ -28,7 +28,7 @@ const router = Router();
 
 router.get("/accommodations", validationMiddleware, getAccommodations);
 router.get("/accommodations/:id", validationMiddleware, getAccommodation);
-router.get("/favorites/accommodations", getAccommodationFavorites);
+router.get("/favorites/accommodations/:userId", getAccommodationFavorites);
 router.put("/accommodations/favorites/add", validationMiddleware, addToFavorite);
 router.put("/accommodations/favorites/remove", validationMiddleware, removeFromAccommodationFavorite);
 

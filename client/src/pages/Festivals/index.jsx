@@ -10,10 +10,12 @@ import FestivalFilter from "../../components/Management/Festivals/FestivalFilter
 import useGetFestivals from "../../hooks/useGetFestivals";
 import useLocalStorageState from "../../hooks/useLocalStorageState";
 import CustomPagination from "../../components/Common/CustomPagination";
+import { addToFavoriteFestival, getFavoriteFestival } from "../../api/festival";
 
 export default function Festivals() {
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
   const [isSidebarOpen, setSidebarOpen] = useState(true);
+  const userId = JSON.parse(localStorage.getItem("userId"))
 
   // Since we are using redux, we can get the festivals data from the store
   const { isAuth } = useSelector((state) => state.auth);
@@ -40,10 +42,19 @@ export default function Festivals() {
   // Fetch festivals from our custom hook
   const { isLoading } = useGetFestivals();
 
-  const handleAddFavorite = (attraction) => {
-    !isAuth && navigate("/user/login");
+  // const handleAddFavorite = (attraction) => {
+  //   !isAuth && navigate("/user/login");
 
-    isAuth && setFavorite((curFestival) => [...curFestival, attraction]);
+  //   isAuth && setFavorite((curFestival) => [...curFestival, attraction]);
+  // };
+  const handleAddFavorite = async (id) => {
+    try {
+    !isAuth && <Navigate to="user/login" />;
+
+      await addToFavoriteFestival(id, userId);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleOnClickSearch = (e) => {
@@ -116,6 +127,12 @@ export default function Festivals() {
 
   useEffect(() => {
     setItems(festivals);
+    const getFavorites = async () => {
+      const favoriteAttractions = await getFavoriteFestival(userId)
+      setFavorite(favoriteAttractions.data);
+    }
+    getFavorites()
+
   }, [festivals]);
 
   return (
